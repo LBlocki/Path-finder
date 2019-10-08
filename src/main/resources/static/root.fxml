@@ -99,5 +99,5 @@
             </font>
         </Text>
     </Pane>
-    <GridPane fx:id="board" layoutX="300.0" prefHeight="800.0" prefWidth="900.0"/>
+    <GridPane fx:id="board" layoutX="315.0" layoutY="10" prefHeight="800.0" prefWidth="900.0" o/>
 </AnchorPane>
