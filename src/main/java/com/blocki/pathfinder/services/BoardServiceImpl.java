@@ -6,15 +6,16 @@ import com.blocki.pathfinder.models.singletons.GameState;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
 
-import java.util.ArrayList;
-
 public class BoardServiceImpl implements BoardService {
 
     private final Board board = Board.getInstance();
 
     private final GameState gameState = GameState.getInstance();
 
-    public BoardServiceImpl(GridPane gridPane) {
+    private static BoardServiceImpl instance = null;
+
+    @Override
+    public void initializeBoard(GridPane gridPane) {
 
         for(int i = 0; i  < board.getBoardHeight(); i++) {
             for(int j = 0; j < board.getBoardWidth(); j++) {
@@ -51,5 +52,10 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public void handleClick(Integer width, Integer height, Node.NODE_TYPE node_type) {
 
+    }
+
+    public static BoardServiceImpl getInstance() {
+
+        return instance == null ? new BoardServiceImpl() : instance;
     }
 }

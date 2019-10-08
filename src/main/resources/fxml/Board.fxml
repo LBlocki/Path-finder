@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml" layoutX="315.0" layoutY="10"
+          fx:id="board" fx:controller="com.blocki.pathfinder.controllers.BoardController"
+          prefHeight="800.0" prefWidth="900.0">
+</GridPane>

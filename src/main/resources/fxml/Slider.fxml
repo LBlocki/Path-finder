@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane xmlns="http://javafx.com/javafx/11.0.1"
+      xmlns:fx="http://javafx.com/fxml/1" prefHeight="100.0" prefWidth="270.0"
+      fx:controller="com.blocki.pathfinder.controllers.SliderController" layoutX="12.0" layoutY="664.0">
+
+    <HBox minWidth="200" prefHeight="30" layoutX="85" spacing="10">
+        <Text strokeWidth="0.0" text="Speed:">
+            <font>
+                <Font size="18.0"/>
+            </font>
+        </Text>
+        <Label minWidth="100.0" text="${slider.accessibleText}" textAlignment="CENTER" layoutX="50">
+            <font>
+                <Font size="18.0"/>
+            </font>
+        </Label>
+    </HBox>
+    <Slider fx:id="slider" onMouseClicked="#sliderMoved" onMouseDragged="#sliderMoved" prefHeight="14.0"
+            prefWidth="273.0" layoutY="30"/>
+
+</Pane>

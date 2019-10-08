@@ -10,8 +10,9 @@ public class Menu {
 
     public enum ALGORITHM_TYPE {A_star, Dijkstra, BFS, DFS, Greedy, JPS}
 
+    public enum HEURISTIC_TYPE {Manhattan, Euclidean, Chebyshev}
+
     @Getter(AccessLevel.NONE)
-    @Setter(AccessLevel.NONE)
     private static Menu instance = null;
 
     private boolean instantSearch = false;
@@ -22,7 +23,7 @@ public class Menu {
 
     private ALGORITHM_TYPE chosenAlgorithm = ALGORITHM_TYPE.Dijkstra;
 
-    private ALGORITHM_TYPE chosenHeuristics= ALGORITHM_TYPE.Dijkstra;
+    private HEURISTIC_TYPE chosenHeuristics= HEURISTIC_TYPE.Manhattan;
 
     private Integer sliderValue = 1;
 

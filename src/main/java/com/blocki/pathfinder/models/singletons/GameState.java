@@ -13,7 +13,6 @@ public class GameState {
     private STATE currentState = STATE.WAITING;
 
     @Getter(AccessLevel.NONE)
-    @Setter(AccessLevel.NONE)
     private static GameState instance;
 
     public static GameState getInstance() {

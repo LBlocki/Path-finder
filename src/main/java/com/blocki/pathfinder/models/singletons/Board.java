@@ -19,10 +19,9 @@ public class Board {
     private final Integer boardHeight = 26;
 
     @Getter(AccessLevel.NONE)
-    @Setter(AccessLevel.NONE)
     private static Board instance = null;
 
-    public Board() {
+    private Board() {
 
         for(int i = 0; i  < boardHeight; i++) {
 

@@ -10,6 +10,8 @@ public class MenuServiceImpl implements MenuService {
 
     private final GameState gameState = GameState.getInstance();
 
+    private static MenuServiceImpl instance = null;
+
     @Override
     public void chooseAlgorithm(RadioButton radioButton) {
 
@@ -33,7 +35,7 @@ public class MenuServiceImpl implements MenuService {
 
             try {
 
-                menu.setChosenHeuristics(Menu.ALGORITHM_TYPE.valueOf(radioButton.getText()));
+                menu.setChosenHeuristics(Menu.HEURISTIC_TYPE.valueOf(radioButton.getText()));
             }
             catch (IllegalArgumentException ex) {
 
@@ -73,5 +75,10 @@ public class MenuServiceImpl implements MenuService {
     public void setSliderSpeed(int value) {
 
         menu.setSliderValue(value);
+    }
+
+    public static MenuServiceImpl getInstance() {
+
+        return instance == null ? new MenuServiceImpl() : instance;
     }
 }
