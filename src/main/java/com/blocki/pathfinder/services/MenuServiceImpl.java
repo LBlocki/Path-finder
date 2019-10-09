@@ -6,9 +6,9 @@ import javafx.scene.control.RadioButton;
 
 public class MenuServiceImpl implements MenuService {
 
-    private final Menu  menu = Menu.getInstance();
+    private Menu  menu = Menu.getInstance();
 
-    private final GameState gameState = GameState.getInstance();
+    private GameState gameState = GameState.getInstance();
 
     private static MenuServiceImpl instance = null;
 

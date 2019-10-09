@@ -18,7 +18,16 @@ public class Board {
 
     private final Integer boardHeight = 26;
 
+    private boolean startChosen = false;
+
+    private boolean endChosen = false;
+
+    private Node startingNode;
+
+    private Node endingNode;
+
     @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     private static Board instance = null;
 
     private Board() {

@@ -12,7 +12,7 @@ public class Pathfinder extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Root.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Board.fxml"));
 
         Scene scene = new Scene(root, 1200, 800, Color.WHITE);
 

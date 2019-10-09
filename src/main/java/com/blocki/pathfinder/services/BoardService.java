@@ -1,14 +1,15 @@
 package com.blocki.pathfinder.services;
 
-import com.blocki.pathfinder.models.nodes.Node;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+
 
 public interface BoardService {
 
     void initializeBoard(GridPane gridPane);
 
-    boolean clearBoard();
+    void handleClick(MouseEvent event, boolean startKeyPressed, boolean endKeyPressed,
+                     boolean mouseEntered, GridPane gridPane);
 
-    void handleClick(Integer width, Integer height, Node.NODE_TYPE node_type);
-
+    void clearBoard(GridPane gridPane);
 }

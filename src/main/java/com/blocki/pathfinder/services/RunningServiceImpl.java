@@ -1,6 +1,9 @@
 package com.blocki.pathfinder.services;
 
 public class RunningServiceImpl implements RunningService {
+
+    private static RunningServiceImpl instance;
+
     @Override
     public boolean runAlgorithm() {
         return false;
@@ -15,4 +18,10 @@ public class RunningServiceImpl implements RunningService {
     public boolean pauseAlgorithm() {
         return false;
     }
+
+    public static RunningServiceImpl getInstance() {
+
+        return instance == null ? new RunningServiceImpl() : instance;
+    }
+
 }

@@ -13,7 +13,7 @@ public class SliderController {
     @FXML
     private Slider slider;
 
-    public void sliderMoved(MouseEvent mouseEvent) {
+    public void sliderMoved() {
 
         menuService.setSliderSpeed((int) slider.getValue());
         slider.setAccessibleText((int) slider.getValue() + "%");
