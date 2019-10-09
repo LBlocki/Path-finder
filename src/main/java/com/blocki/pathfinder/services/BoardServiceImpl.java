@@ -37,7 +37,7 @@ public class BoardServiceImpl implements BoardService {
         javafx.scene.Node clickedNode = event.getPickResult().getIntersectedNode();
         Integer colIndex = GridPane.getColumnIndex(clickedNode);
         Integer rowIndex = GridPane.getRowIndex(clickedNode);
-        Node node = board.getBoardNodes().get(colIndex).get(rowIndex);
+        Node node = board.getBoardNodes().get(rowIndex).get(colIndex);
 
         if (gameState.getCurrentState() == GameState.STATE.WAITING && mouseEntered) {
 
