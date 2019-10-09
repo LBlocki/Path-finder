@@ -45,6 +45,12 @@ public class Board {
 
     public static Board getInstance() {
 
-        return instance == null ? new Board() : instance;
+        if(instance == null) {
+
+            instance = new Board();
+        }
+
+        return instance;
     }
+
 }

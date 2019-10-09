@@ -13,10 +13,16 @@ public class GameState {
     private STATE currentState = STATE.WAITING;
 
     @Getter(AccessLevel.NONE)
-    private static GameState instance;
+    @Setter(AccessLevel.NONE)
+    private static GameState instance = null;
 
     public static GameState getInstance() {
 
-        return instance == null ? new GameState() : instance;
+        if(instance == null) {
+
+            instance = new GameState();
+        }
+
+        return instance;
     }
 }

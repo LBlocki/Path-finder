@@ -29,7 +29,12 @@ public class Menu {
 
     public static Menu getInstance() {
 
-        return instance == null ? new Menu() : instance;
+        if(instance == null) {
+
+            instance = new Menu();
+        }
+
+        return instance;
     }
 
 }
