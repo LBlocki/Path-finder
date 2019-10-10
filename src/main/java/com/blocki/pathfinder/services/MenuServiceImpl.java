@@ -6,11 +6,11 @@ import javafx.scene.control.RadioButton;
 
 public class MenuServiceImpl implements MenuService {
 
-    private Menu  menu = Menu.getInstance();
-
-    private GameState gameState = GameState.getInstance();
-
     private static MenuServiceImpl instance = null;
+    
+    private final Menu menu = Menu.getInstance();
+    
+    private final GameState gameState = GameState.getInstance();
 
     @Override
     public void chooseAlgorithm(RadioButton radioButton) {
@@ -79,6 +79,11 @@ public class MenuServiceImpl implements MenuService {
 
     public static MenuServiceImpl getInstance() {
 
-        return instance == null ? new MenuServiceImpl() : instance;
+        if(instance == null) {
+
+            instance = new MenuServiceImpl();
+        }
+
+        return instance;
     }
 }

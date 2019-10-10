@@ -1,113 +1,75 @@
 package com.blocki.pathfinder.controllers;
 
-import com.blocki.pathfinder.models.singletons.GameState;
-import com.blocki.pathfinder.services.BoardService;
 import com.blocki.pathfinder.services.BoardServiceImpl;
-import com.blocki.pathfinder.services.RunningService;
 import com.blocki.pathfinder.services.RunningServiceImpl;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
 public class BoardController {
 
     @FXML
+    public AnchorPane options;
+
+    @FXML
+    public Button stopPauseButton;
+
+    @FXML
     private GridPane board;
-
-    private BoardService boardService;
-
-    private RunningService runningService;
-
-    private GameState gameState;
-
-    private boolean startKeyPressed = false;
-
-    private boolean endKeyPressed = false;
-
-    private boolean mouseEntered = false;
 
     @FXML
     void initialize(){
 
-        boardService = BoardServiceImpl.getInstance();
-        runningService = RunningServiceImpl.getInstance();
-
-        boardService.initializeBoard(board);
-
-        gameState = GameState.getInstance();
+        BoardServiceImpl.getInstance().initializeBoard(board);
     }
 
     public void startPressed() {
 
-        if(gameState.getCurrentState() == GameState.STATE.WAITING ||
-                gameState.getCurrentState() == GameState.STATE.PAUSED) {
-
-            gameState.setCurrentState(GameState.STATE.ACTIVE);
-            runningService.runAlgorithm();
-        }
+        RunningServiceImpl.getInstance().runAlgorithm(board, options, stopPauseButton);
     }
 
     public void pauseOrStopPressed() {
 
-        if(gameState.getCurrentState() == GameState.STATE.ACTIVE) {
+        RunningServiceImpl.getInstance().pauseOrStopAlgorithm(board, stopPauseButton, options);
 
-            gameState.setCurrentState(GameState.STATE.PAUSED);
-            runningService.pauseAlgorithm();
-        }
-
-        else if(gameState.getCurrentState() == GameState.STATE.PAUSED) {
-
-            gameState.setCurrentState(GameState.STATE.WAITING);
-            runningService.stopAlgorithm();
-        }
     }
-
 
     public void clearPressed() {
 
-        if(gameState.getCurrentState() == GameState.STATE.WAITING) {
-
-            boardService.clearBoard(board);
-        }
+        BoardServiceImpl.getInstance().clearBoard(board, true);
     }
 
     public void mousePressed(MouseEvent event) {
 
-        boardService.handleClick(event, startKeyPressed, endKeyPressed, mouseEntered, board);
+        BoardServiceImpl.getInstance().handleClick(event, board);
     }
 
     @FXML
     public void keyPressed(KeyEvent event) {
 
-        if (event.getCode().getName().equals("S")) {
-            startKeyPressed = true;
-        }
-
-
-        else if (event.getCode().getName().equals("E")) {
-            endKeyPressed = true;
-        }
-
-
-        else {
-            startKeyPressed = false;
-            endKeyPressed = false;
-        }
+       BoardServiceImpl.getInstance().keyPressed(event);
     }
 
     @FXML
     public void keyReleased() {
 
-        startKeyPressed = false;
-        endKeyPressed = false;
+        BoardServiceImpl.getInstance().keyReleased();
     }
 
     @FXML
-    private void mouseEntered() { mouseEntered = true; }
+    private void mouseEntered() {
+
+        BoardServiceImpl.getInstance().mouseEntered();
+    }
 
     @FXML
-    private void mouseLeft() {mouseEntered = false;}
+    private void mouseLeft() {
+
+        BoardServiceImpl.getInstance().mouseLeft();
+    }
 
 
 }

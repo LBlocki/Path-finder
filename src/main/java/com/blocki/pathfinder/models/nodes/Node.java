@@ -3,6 +3,8 @@ package com.blocki.pathfinder.models.nodes;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Objects;
+
 @Getter
 @Setter
 public class Node {
@@ -21,4 +23,23 @@ public class Node {
         this._node_type = _node_type;
     }
 
+    @Override
+    public boolean equals(Object object) {
+
+        if (this == object) {
+            return true;
+        }
+
+        else if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+
+        Node node = (Node) object;
+        return getWidth().equals(node.getWidth()) && getHeight().equals(node.getHeight());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getWidth(), getHeight());
+    }
 }

@@ -1,10 +1,12 @@
 package com.blocki.pathfinder.services;
 
+import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+
 public interface RunningService {
 
-    boolean runAlgorithm();
+    void runAlgorithm(GridPane board, AnchorPane options, Button stopPauseButton);
 
-    boolean stopAlgorithm();
-
-    boolean pauseAlgorithm();
+    void pauseOrStopAlgorithm(GridPane board, Button stopPauseButton, AnchorPane options);
 }

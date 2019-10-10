@@ -13,6 +13,7 @@ public class Menu {
     public enum HEURISTIC_TYPE {Manhattan, Euclidean, Chebyshev}
 
     @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     private static Menu instance = null;
 
     private boolean instantSearch = false;

@@ -9,7 +9,7 @@
             xmlns:fx="http://javafx.com/fxml">
 
     <Pane prefHeight="800.0" prefWidth="300.0">
-        <fx:include source="OptionButtons.fxml"/>
+        <fx:include source="OptionButtons.fxml" fx:id="options"/>
         <Line endX="4.0" endY="159.0" layoutX="141.0" layoutY="331.0" startX="4.0" startY="-4.0"/>
         <Line endX="153.0" endY="-338.0" layoutX="147.0" layoutY="338.0" startX="152.0" startY="462.0"/>
         <fx:include source="Slider.fxml"/>
@@ -19,8 +19,8 @@
               layoutX="10.0" layoutY="554.0" prefHeight="98.0" prefWidth="290.0" spacing="10.0">
             <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="86.0" text="Start"
                     onMouseClicked="#startPressed"/>
-            <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="86.0" text="Pause"
-                    onMouseClicked="#pauseOrStopPressed"/>
+            <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="86.0" text="Stop"
+                    onMouseClicked="#pauseOrStopPressed" fx:id="stopPauseButton"/>
             <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="86.0" text="Clear"
                     onMouseClicked="#clearPressed"/>
         </HBox>
