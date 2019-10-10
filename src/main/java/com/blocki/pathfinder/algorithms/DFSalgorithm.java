@@ -8,9 +8,12 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Stack;
+import java.util.concurrent.CopyOnWriteArrayList;
 
-public class BFSalgorithm extends Algorithm {
+public class DFSalgorithm extends Algorithm {
 
     private List<List<AlgorithmNode>> nodeList = new LinkedList<>();
 
@@ -23,7 +26,7 @@ public class BFSalgorithm extends Algorithm {
     private AlgorithmNode endingNode;
 
     @Override
-    final void prepare() {
+    void prepare() {
 
         startingNode = new AlgorithmNode(super.getBoard().getStartingNode().getWidth(),
                 super.getBoard().getStartingNode().getHeight(),
@@ -63,21 +66,21 @@ public class BFSalgorithm extends Algorithm {
     }
 
     @Override
-    public final void run(GridPane gridPane, AnchorPane option, Button stopOrPauseButton) throws Exception {
+    public void run(GridPane gridPane, AnchorPane option, Button stopOrPauseButton) throws Exception {
 
         prepare();
-        Queue<AlgorithmNode> queue = new LinkedList<>();
+
+        Stack<AlgorithmNode> stack = new Stack<>();
 
         startingNode.setVisited(true);
-        queue.add(startingNode);
-
+        stack.add(startingNode);
         option.getChildren().forEach(button -> button.setDisable(true));
 
-        while (!queue.isEmpty()) {
+        while(!stack.empty()) {
 
             while (super.getGameState().getCurrentState() == GameState.STATE.PAUSED) {
 
-               Thread.sleep(100);
+                Thread.sleep(100);
             }
 
             if( super.getGameState().getCurrentState() == GameState.STATE.WAITING) {
@@ -85,7 +88,8 @@ public class BFSalgorithm extends Algorithm {
                 break;
             }
 
-            AlgorithmNode currentNode = queue.poll();
+            AlgorithmNode currentNode = stack.pop();
+            currentNode.setVisited(true);
 
             List<AlgorithmNode> children = super.getChildren(currentNode, nodeList);
 
@@ -101,17 +105,19 @@ public class BFSalgorithm extends Algorithm {
             for (AlgorithmNode child : children) {
 
                 child.setParent(currentNode);
-                child.setVisited(true);
 
-                queue.add(child);
-                AlgorithmNode finalChild1 = child;
+                if(!stack.contains(child)) {
 
-                if (super.getMenu().isInstantSearch()) {
+                    stack.add(child);
+                    AlgorithmNode finalChild1 = child;
 
-                    openList.add(finalChild1);
-                } else {
+                    if (super.getMenu().isInstantSearch()) {
 
-                    Platform.runLater(() -> draw(gridPane, finalChild1, DRAW_TYPE.OPEN_LIST));
+                        openList.add(finalChild1);
+                    } else {
+
+                        Platform.runLater(() -> draw(gridPane, finalChild1, DRAW_TYPE.OPEN_LIST));
+                    }
                 }
 
                 if (child.equals(endingNode)) {

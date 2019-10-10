@@ -32,7 +32,7 @@ abstract class Algorithm {
         this.menu = Menu.getInstance();
     }
 
-    public abstract void run(GridPane gridPane,AnchorPane anchorPane,  Button stopOrPauseButton) throws Exception;
+    public abstract void run(GridPane gridPane,AnchorPane option,  Button stopOrPauseButton) throws Exception;
 
     abstract void prepare();
 
