@@ -9,7 +9,7 @@ import javafx.scene.layout.GridPane;
 
 import java.util.*;
 
-public class DijkstraAlgorithm extends DistanceCalculatingAlgorithm {
+public class GreedyAlgorithm extends DistanceCalculatingAlgorithm {
 
     private List<List<AlgorithmNode>> nodesList = new LinkedList<>();
 
@@ -17,7 +17,7 @@ public class DijkstraAlgorithm extends DistanceCalculatingAlgorithm {
 
     private List<AlgorithmNode> closedList = new LinkedList<>();
 
-    private Queue<AlgorithmNode> queue = new PriorityQueue<>(Comparator.comparingDouble(AlgorithmNode::getDistanceToStart));
+    private Queue<AlgorithmNode> queue = new PriorityQueue<>(Comparator.comparingDouble(AlgorithmNode::getDistanceToEnd));
 
     @Override
     final void prepare() {
@@ -37,11 +37,12 @@ public class DijkstraAlgorithm extends DistanceCalculatingAlgorithm {
                 AlgorithmNode insideNode = new AlgorithmNode(node.getWidth(), node.getHeight(), node.get_node_type());
                 insideNode.setVisited(false);
                 insideNode.setChildren(new LinkedList<>());
-                insideNode.setDistanceToStart(Double.MAX_VALUE);
+                insideNode.setParent(null);
+                insideNode.setDistanceToEnd(Double.MAX_VALUE);
 
                 if (insideNode.get_node_type() == Node.NODE_TYPE.START) {
 
-                    insideNode.setDistanceToStart(0.0);
+                    insideNode.setDistanceToEnd(super.calculateDistanceToEndNode(insideNode));
                     queue.add(insideNode);
                 }
 
@@ -86,12 +87,10 @@ public class DijkstraAlgorithm extends DistanceCalculatingAlgorithm {
 
             for (AlgorithmNode child : children) {
 
-                Double temp = currentNode.getDistanceToStart() +
-                        super.calculateDistanceBetween2neighbourNodes(child, currentNode);
+                child.setDistanceToEnd(super.calculateDistanceToEndNode(child));
+
 
                 if (!queue.contains(child)) {
-
-                    child.setDistanceToStart(temp);
                     child.setParent(currentNode);
                     queue.add(child);
 
@@ -102,12 +101,6 @@ public class DijkstraAlgorithm extends DistanceCalculatingAlgorithm {
 
                         Platform.runLater(() -> draw(gridPane, child, DRAW_TYPE.OPEN_LIST));
                     }
-                }
-
-                else if (temp < child.getDistanceToStart()) {
-
-                    child.setDistanceToStart(temp);
-                    child.setParent(currentNode);
                 }
 
                 if (!super.getMenu().isInstantSearch()) {

@@ -2,31 +2,62 @@ package com.blocki.pathfinder.algorithms;
 
 import com.blocki.pathfinder.models.nodes.AlgorithmNode;
 import com.blocki.pathfinder.models.singletons.Board;
+import com.blocki.pathfinder.models.singletons.Menu;
 
 abstract class DistanceCalculatingAlgorithm extends Algorithm {
 
     private final Board board = Board.getInstance();
 
-    int calculateDistanceToStartNode(AlgorithmNode node) {
+    private final Menu menu = Menu.getInstance();
 
-       if(node.getWidth().equals(board.getStartingNode().getWidth()) ||
-               node.getHeight().equals(board.getStartingNode().getHeight())) {
+    double calculateDistanceToStartNode(AlgorithmNode node) {
 
-           return 10;
+       switch (menu.getChosenHeuristics()) {
+
+           case Manhattan:
+
+               return Math.abs(node.getWidth() - board.getStartingNode().getWidth()) +
+                       Math.abs(node.getHeight() - board.getStartingNode().getHeight());
+           case Euclidean:
+
+               Integer widthDistance = node.getWidth() - board.getStartingNode().getWidth();
+               Integer heightDistance = node.getHeight() - board.getStartingNode().getHeight();
+
+               return Math.sqrt(widthDistance * widthDistance + heightDistance* heightDistance);
+
+           case Chebyshev:
+
+               return Math.max(node.getWidth() - board.getStartingNode().getWidth(),
+                       Math.abs(node.getHeight() - board.getStartingNode().getHeight()));
+
        }
 
-       return 14;
+       return 0;
     }
 
-    int calculateDistanceToEndNode(AlgorithmNode node) {
+    double calculateDistanceToEndNode(AlgorithmNode node) {
 
-        if(node.getWidth().equals(board.getEndingNode().getWidth()) ||
-                node.getHeight().equals(board.getEndingNode().getHeight())) {
+        switch (menu.getChosenHeuristics()) {
 
-            return 10;
+            case Manhattan:
+
+                return Math.abs(node.getWidth() - board.getEndingNode().getWidth()) +
+                        Math.abs(node.getHeight() - board.getEndingNode().getHeight());
+            case Euclidean:
+
+                Integer widthDistance = node.getWidth() - board.getEndingNode().getWidth();
+                Integer heightDistance = node.getHeight() - board.getEndingNode().getHeight();
+
+                return Math.sqrt(widthDistance * widthDistance + heightDistance* heightDistance);
+
+            case Chebyshev:
+
+                return Math.max(node.getWidth() - board.getEndingNode().getWidth(),
+                        Math.abs(node.getHeight() - board.getEndingNode().getHeight()));
+
         }
 
-        return 14;
+        return 0;
     }
 
     int calculateDistanceBetween2neighbourNodes(AlgorithmNode firstNode, AlgorithmNode secondNode) {
