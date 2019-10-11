@@ -1,5 +1,6 @@
 package com.blocki.pathfinder.models.nodes;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,4 +31,11 @@ public class AlgorithmNode extends Node {
         distanceToEnd = 0.0;
         distanceToStart = 0.0;
     }
+
+    public final Double getTotalDistance() {
+
+        return distanceToEnd + distanceToStart;
+    }
+
+
 }

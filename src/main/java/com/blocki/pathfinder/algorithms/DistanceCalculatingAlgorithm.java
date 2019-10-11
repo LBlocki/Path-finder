@@ -41,32 +41,32 @@ abstract class DistanceCalculatingAlgorithm extends Algorithm {
 
             case Manhattan:
 
-                return Math.abs(node.getWidth() - board.getEndingNode().getWidth()) +
-                        Math.abs(node.getHeight() - board.getEndingNode().getHeight());
+                return 10 * (Math.abs(node.getWidth() - board.getEndingNode().getWidth()) +
+                         Math.abs(node.getHeight() - board.getEndingNode().getHeight()));
             case Euclidean:
 
                 Integer widthDistance = node.getWidth() - board.getEndingNode().getWidth();
                 Integer heightDistance = node.getHeight() - board.getEndingNode().getHeight();
 
-                return Math.sqrt(widthDistance * widthDistance + heightDistance* heightDistance);
+                return Math.sqrt(10 * (widthDistance * widthDistance + heightDistance* heightDistance));
 
             case Chebyshev:
 
-                return Math.max(node.getWidth() - board.getEndingNode().getWidth(),
-                        Math.abs(node.getHeight() - board.getEndingNode().getHeight()));
+                return Math.max(10 * node.getWidth() - board.getEndingNode().getWidth(),
+                        Math.abs(10 * node.getHeight() - board.getEndingNode().getHeight()));
 
         }
 
         return 0;
     }
 
-    int calculateDistanceBetween2neighbourNodes(AlgorithmNode firstNode, AlgorithmNode secondNode) {
+    double calculateDistanceBetween2neighbourNodes(AlgorithmNode firstNode, AlgorithmNode secondNode) {
 
         if(firstNode.getWidth().equals(secondNode.getWidth()) || firstNode.getHeight().equals(secondNode.getHeight())) {
 
             return 10;
         }
 
-        return 14;
+        return 14.1;
     }
 }

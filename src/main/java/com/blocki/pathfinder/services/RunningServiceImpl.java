@@ -1,9 +1,6 @@
 package com.blocki.pathfinder.services;
 
-import com.blocki.pathfinder.algorithms.BFSAlgorithm;
-import com.blocki.pathfinder.algorithms.DFSAlgorithm;
-import com.blocki.pathfinder.algorithms.DijkstraAlgorithm;
-import com.blocki.pathfinder.algorithms.GreedyAlgorithm;
+import com.blocki.pathfinder.algorithms.*;
 import com.blocki.pathfinder.models.singletons.Board;
 import com.blocki.pathfinder.models.singletons.GameState;
 import com.blocki.pathfinder.models.singletons.Menu;
@@ -30,6 +27,8 @@ public class RunningServiceImpl implements RunningService {
     private final DijkstraAlgorithm dijkstra = new DijkstraAlgorithm();
 
     private final GreedyAlgorithm greedy = new GreedyAlgorithm();
+
+    private final AStarAlgorithm astar = new AStarAlgorithm();
 
     public static RunningServiceImpl getInstance() {
 
@@ -63,6 +62,7 @@ public class RunningServiceImpl implements RunningService {
                         switch (menu.getChosenAlgorithm()) {
 
                             case A_star:
+                                astar.run(gridPane, option, stopButton);
                                 break;
 
                             case Dijkstra:
