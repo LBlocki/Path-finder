@@ -5,6 +5,7 @@ import com.blocki.pathfinder.models.nodes.Node;
 import com.blocki.pathfinder.models.singletons.Board;
 import com.blocki.pathfinder.models.singletons.GameState;
 import com.blocki.pathfinder.models.singletons.Menu;
+import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -125,7 +126,7 @@ abstract class Algorithm {
     final void waitingTimer() {
 
         int time = (int) System.currentTimeMillis();
-        while ((int) System.currentTimeMillis() - time < 500 / (menu.getSliderValue())) ;
+        while ((int) System.currentTimeMillis() - time < 400 / (menu.getSliderValue())) ;
     }
 
     private boolean checkNorth(AlgorithmNode node, List<List<AlgorithmNode>> nodesList) {
@@ -214,4 +215,74 @@ abstract class Algorithm {
         }
     }
 
+    boolean checkForInterruptions() throws InterruptedException {
+
+        while (gameState.getCurrentState() == GameState.STATE.PAUSED) {
+
+            Thread.sleep(100);
+        }
+
+        return gameState.getCurrentState() != GameState.STATE.WAITING;
+    }
+
+    boolean checkIfFound(GridPane gridPane,
+                         AnchorPane option,
+                         Button stopOrPauseButton,
+                         AlgorithmNode currentNode,
+                         AlgorithmNode child,
+                         List<AlgorithmNode> openList,
+                         List<AlgorithmNode> closedList) {
+
+        if (child.get_node_type() == Node.NODE_TYPE.END) {
+
+            if (menu.isInstantSearch()) {
+
+                Platform.runLater(() -> {
+
+                    openList.forEach(node -> draw(gridPane, node, DRAW_TYPE.OPEN_LIST));
+                    closedList.forEach(node -> draw(gridPane, node, DRAW_TYPE.CLOSED_LIST));
+                });
+            }
+
+            Platform.runLater(() -> draw(gridPane, currentNode, DRAW_TYPE.PARENT));
+
+            while (child.getParent().get_node_type() != Node.NODE_TYPE.START) {
+
+                waitingTimer();
+
+                child = child.getParent();
+                AlgorithmNode finalChild = child;
+
+                Platform.runLater(() -> draw(gridPane, finalChild, DRAW_TYPE.PARENT));
+
+                Platform.runLater(() ->openList.remove(finalChild));
+                Platform.runLater(() ->closedList.remove(finalChild));
+            }
+
+            getGameState().setCurrentState(GameState.STATE.WAITING);
+            Platform.runLater(() ->stopOrPauseButton.setText("Stop"));
+            option.getChildren().forEach(button -> button.setDisable(false));
+
+            return true;
+        }
+
+        return false;
+    }
+
+    void prepareToReturn(GridPane gridPane, AnchorPane option, Button stopOrPauseButton, List<AlgorithmNode> openList,
+                         List<AlgorithmNode> closedList) {
+
+        if (menu.isInstantSearch()) {
+
+            Platform.runLater(() -> {
+
+                openList.forEach(node -> draw(gridPane, node, DRAW_TYPE.OPEN_LIST));
+                closedList.forEach(node -> draw(gridPane, node, DRAW_TYPE.CLOSED_LIST));
+            });
+        }
+
+        Platform.runLater(() ->stopOrPauseButton.setText("Stop"));
+        option.getChildren().forEach(button -> button.setDisable(false));
+        getGameState().setCurrentState(GameState.STATE.WAITING);
+    }
 }

@@ -14,6 +14,10 @@ public class AlgorithmNode extends Node {
 
     private boolean visited;
 
+    private int distanceToStart;
+
+    private int distanceToEnd;
+
     private AlgorithmNode parent;
 
     public AlgorithmNode(Integer width, Integer height, NODE_TYPE _node_type) {
@@ -22,5 +26,8 @@ public class AlgorithmNode extends Node {
 
         children = new LinkedList<>();
         visited = false;
+
+        distanceToEnd = 0;
+        distanceToStart = 0;
     }
 }

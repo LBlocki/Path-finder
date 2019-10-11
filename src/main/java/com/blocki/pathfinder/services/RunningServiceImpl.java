@@ -1,7 +1,8 @@
 package com.blocki.pathfinder.services;
 
-import com.blocki.pathfinder.algorithms.BFSalgorithm;
-import com.blocki.pathfinder.algorithms.DFSalgorithm;
+import com.blocki.pathfinder.algorithms.BFSAlgorithm;
+import com.blocki.pathfinder.algorithms.DFSAlgorithm;
+import com.blocki.pathfinder.algorithms.DijkstraAlgorithm;
 import com.blocki.pathfinder.models.singletons.Board;
 import com.blocki.pathfinder.models.singletons.GameState;
 import com.blocki.pathfinder.models.singletons.Menu;
@@ -21,9 +22,11 @@ public class RunningServiceImpl implements RunningService {
 
     private final Menu menu = Menu.getInstance();
 
-    private final BFSalgorithm bfs = new BFSalgorithm();
+    private final BFSAlgorithm bfs = new BFSAlgorithm();
 
-    private final DFSalgorithm dfs = new DFSalgorithm();
+    private final DFSAlgorithm dfs = new DFSAlgorithm();
+
+    private final DijkstraAlgorithm dijkstra = new DijkstraAlgorithm();
 
     public static RunningServiceImpl getInstance() {
 
@@ -60,6 +63,7 @@ public class RunningServiceImpl implements RunningService {
                                 break;
 
                             case Dijkstra:
+                                dijkstra.run(gridPane, option, stopButton);
                                 break;
 
                             case BFS:
