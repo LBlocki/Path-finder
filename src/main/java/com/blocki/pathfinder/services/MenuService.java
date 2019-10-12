@@ -7,7 +7,8 @@ import javafx.scene.control.ToggleGroup;
  *Implementations of this interface handle many interactions between user and program such as
  * choosing various options.
  */
-public interface MenuService {
+public interface MenuService
+{
 
     /**
      * This method is triggered when users chooses algorithm.

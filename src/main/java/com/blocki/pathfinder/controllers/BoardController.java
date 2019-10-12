@@ -12,7 +12,8 @@ import javafx.scene.layout.GridPane;
 /**
  * This controller serves as main controllers controlling main button options and board
  */
-public class BoardController {
+public class BoardController
+{
 
     @FXML
     public AnchorPane options;
@@ -27,52 +28,61 @@ public class BoardController {
      * Draws initial look of the clean board
      */
     @FXML
-    void initialize(){
+    void initialize()
+    {
 
         BoardServiceImpl.getInstance().initializeBoard(board);
     }
 
-    public void startPressed() {
+    public void startPressed()
+    {
 
         RunningServiceImpl.getInstance().runAlgorithm(board, options, stopPauseButton);
     }
 
-    public void pauseOrStopPressed() {
+    public void pauseOrStopPressed()
+    {
 
         RunningServiceImpl.getInstance().pauseOrStopAlgorithm(board, stopPauseButton, options);
 
     }
 
-    public void clearPressed() {
+    public void clearPressed()
+    {
 
         BoardServiceImpl.getInstance().clearBoard(board, true);
     }
 
-    public void mousePressed(MouseEvent event) {
+    public void mousePressed(MouseEvent event)
+    {
 
         BoardServiceImpl.getInstance().handleClick(event, board);
     }
 
     @FXML
-    public void keyPressed(KeyEvent event) {
+    public void keyPressed(KeyEvent event)
+    {
 
        BoardServiceImpl.getInstance().keyPressed(event);
     }
 
     @FXML
-    public void keyReleased() {
+    public void keyReleased()
+    {
 
         BoardServiceImpl.getInstance().keyReleased();
     }
 
     @FXML
-    private void mouseEntered() {
+    private void mouseEntered()
+    {
 
         BoardServiceImpl.getInstance().mouseEntered();
     }
 
     @FXML
-    private void mouseLeft() {
+    private void mouseLeft()
+    {
 
         BoardServiceImpl.getInstance().mouseLeft();
     }

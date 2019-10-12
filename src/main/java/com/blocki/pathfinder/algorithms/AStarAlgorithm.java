@@ -10,7 +10,8 @@ import javafx.scene.layout.GridPane;
 
 import java.util.*;
 
-public class AStarAlgorithm extends DistanceCalculatingAlgorithm {
+public class AStarAlgorithm extends DistanceCalculatingAlgorithm
+{
 
     private List<List<AlgorithmNode>> nodesList = new LinkedList<>();
 
@@ -23,7 +24,8 @@ public class AStarAlgorithm extends DistanceCalculatingAlgorithm {
     private Integer totalOperations;
 
     @Override
-    final void prepare() {
+    final void prepare()
+    {
 
         queue.clear();
         nodesList.clear();
@@ -34,11 +36,13 @@ public class AStarAlgorithm extends DistanceCalculatingAlgorithm {
         totalLength = 0;
 
         int i = 0;
-        for (List<Node> nodes : super.getBoard().getBoardNodes()) {
+        for (List<Node> nodes : super.getBoard().getBoardNodes())
+        {
 
             nodesList.add(new LinkedList<>());
 
-            for (Node node : nodes) {
+            for (Node node : nodes)
+            {
 
                 AlgorithmNode insideNode = new AlgorithmNode(node.getWidth(), node.getHeight(), node.get_node_type());
                 insideNode.setDistanceToStart(Double.MAX_VALUE);
@@ -48,7 +52,8 @@ public class AStarAlgorithm extends DistanceCalculatingAlgorithm {
                 insideNode.setDistanceToEnd(Double.MAX_VALUE);
 
 
-                if (insideNode.get_node_type() == Node.NODE_TYPE.START) {
+                if (insideNode.get_node_type() == Node.NODE_TYPE.START)
+                {
 
                     insideNode.setDistanceToStart(0.0);
                     insideNode.setDistanceToEnd(super.calculateDistanceToEndNode(insideNode));
@@ -62,7 +67,8 @@ public class AStarAlgorithm extends DistanceCalculatingAlgorithm {
     }
 
     @Override
-    public void run(GridPane gridPane, AnchorPane option, Button stopOrPauseButton) throws Exception {
+    public void run(GridPane gridPane, AnchorPane option, Button stopOrPauseButton) throws Exception
+    {
 
         prepare();
         Platform.runLater(() -> ((Label) (option.lookup("#pathLength"))).setText(String.valueOf(totalLength)));
@@ -72,13 +78,15 @@ public class AStarAlgorithm extends DistanceCalculatingAlgorithm {
                 .filter(child -> !(child instanceof Label))
                 .forEach(button -> button.setDisable(true));
 
-        while (!queue.isEmpty()) {
+        while (!queue.isEmpty())
+        {
 
             AlgorithmNode currentNode = queue.poll();
             currentNode.setVisited(true);
 
             totalOperations++;
-            if (!super.checkForInterruptions()) {
+            if (!super.checkForInterruptions())
+            {
 
                 break;
             }
@@ -87,13 +95,15 @@ public class AStarAlgorithm extends DistanceCalculatingAlgorithm {
 
             List<AlgorithmNode> children = super.getChildren(currentNode, nodesList);
 
-            for (AlgorithmNode child : children) {
+            for (AlgorithmNode child : children)
+            {
 
                 double tempDistance = currentNode.getDistanceToStart() +
                         super.calculateDistanceBetween2neighbourNodes(currentNode, child) +
                         super.calculateDistanceToEndNode(child);
 
-                if (!queue.contains(child)) {
+                if (!queue.contains(child))
+                {
 
                     child.setParent(currentNode);
                     child.setDistanceToStart(currentNode.getDistanceToStart() +
@@ -105,7 +115,8 @@ public class AStarAlgorithm extends DistanceCalculatingAlgorithm {
                     super.addToOpenListUpdateGrid(gridPane, option, totalOperations, child, openList, closedList);
                 }
 
-                else if (tempDistance < child.getTotalDistance()) {
+                else if (tempDistance < child.getTotalDistance())
+                {
 
                     child.setDistanceToStart( currentNode.getDistanceToStart() +
                             super.calculateDistanceBetween2neighbourNodes(currentNode, child));
@@ -117,13 +128,15 @@ public class AStarAlgorithm extends DistanceCalculatingAlgorithm {
                     super.addToOpenListUpdateGrid(gridPane, option, totalOperations, child, openList, closedList);
                 }
 
-                if (super.checkIfFound(gridPane, option, stopOrPauseButton, currentNode, child,totalOperations, openList, closedList)) {
+                if (super.checkIfFound(gridPane, option, stopOrPauseButton, currentNode, child,totalOperations, openList, closedList))
+                {
 
                     prepareToReturn(gridPane, option, stopOrPauseButton, openList, closedList);
                     return;
                 }
 
-                if (!super.getMenu().isInstantSearch()) {
+                if (!super.getMenu().isInstantSearch())
+                {
 
                     super.waitingTimer();
                 }

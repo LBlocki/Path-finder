@@ -14,7 +14,8 @@ import java.util.List;
  */
 @Getter
 @Setter
-public class Board {
+public class Board
+{
 
     private List<List<Node>> boardNodes = new ArrayList<>();
 
@@ -48,13 +49,16 @@ public class Board {
 
     private final String endTileColor = "-fx-background-color: blue;";
 
-    private Board() {
+    private Board()
+    {
 
-        for(int i = 0; i  < boardHeight; i++) {
+        for(int i = 0; i  < boardHeight; i++)
+        {
 
             boardNodes.add(new ArrayList<>());
 
-            for(int j = 0; j < boardWidth; j++) {
+            for(int j = 0; j < boardWidth; j++)
+            {
 
                 boardNodes.get(i).add(new Node(j,i, Node.NODE_TYPE.CLEAN));
             }
@@ -65,14 +69,15 @@ public class Board {
      * This ensures its a singleton
      * @return if its the first call, method will create new object, otherwise it will return existing one
      */
-    public static Board getInstance() {
+    public static Board getInstance()
+    {
 
-        if(instance == null) {
+        if(instance == null)
+        {
 
             instance = new Board();
         }
 
         return instance;
     }
-
 }

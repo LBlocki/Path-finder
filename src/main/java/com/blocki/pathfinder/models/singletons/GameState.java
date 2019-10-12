@@ -10,7 +10,8 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class GameState {
+public class GameState
+{
 
     public enum STATE {ACTIVE, PAUSED, WAITING}
 
@@ -24,9 +25,11 @@ public class GameState {
      * This ensures its a singleton
      * @return if its the first call, method will create new object, otherwise it will return existing one
      */
-    public static GameState getInstance() {
+    public static GameState getInstance()
+    {
 
-        if(instance == null) {
+        if(instance == null)
+        {
 
             instance = new GameState();
         }

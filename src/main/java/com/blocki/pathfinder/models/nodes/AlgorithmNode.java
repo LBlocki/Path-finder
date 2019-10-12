@@ -12,7 +12,8 @@ import java.util.List;
  */
 @Getter
 @Setter
-public class AlgorithmNode extends Node {
+public class AlgorithmNode extends Node
+{
 
     private List<AlgorithmNode> children;
 
@@ -24,7 +25,8 @@ public class AlgorithmNode extends Node {
 
     private AlgorithmNode parent;
 
-    public AlgorithmNode(Integer width, Integer height, NODE_TYPE _node_type) {
+    public AlgorithmNode(Integer width, Integer height, NODE_TYPE _node_type)
+    {
 
         super(width, height, _node_type);
 
@@ -35,7 +37,8 @@ public class AlgorithmNode extends Node {
         distanceToStart = 0.0;
     }
 
-    public final Double getTotalDistance() {
+    public final Double getTotalDistance()
+    {
 
         return distanceToEnd + distanceToStart;
     }

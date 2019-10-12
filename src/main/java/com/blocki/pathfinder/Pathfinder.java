@@ -17,10 +17,12 @@ import javafx.stage.Stage;
  * @version 1.0
  * @since   2019.12.10
  */
-public class Pathfinder extends Application {
+public class Pathfinder extends Application
+{
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) throws Exception
+    {
 
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/Board.fxml"));
 
@@ -31,7 +33,8 @@ public class Pathfinder extends Application {
         primaryStage.setResizable(false);
         primaryStage.show();
     }
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         launch(args);
     }
 }

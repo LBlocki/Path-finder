@@ -8,7 +8,8 @@ import javafx.scene.control.ToggleGroup;
 /**
  * This controller handles all calls concerning choosing algorithm , heuristic and additional options
  */
-public class OptionButtonsController {
+public class OptionButtonsController
+{
 
     @FXML
     private ToggleGroup algorithms;
@@ -16,28 +17,33 @@ public class OptionButtonsController {
     @FXML
     private ToggleGroup heuristics;
 
-    public void algorithmButtonPressed() {
+    public void algorithmButtonPressed()
+    {
 
       MenuServiceImpl.getInstance().chooseAlgorithm(heuristics, (RadioButton)algorithms.getSelectedToggle());
     }
 
-    public void diagonalSearchBoxPressed() {
+    public void diagonalSearchBoxPressed()
+    {
 
         MenuServiceImpl.getInstance().switchDiagonalSearch();
     }
 
 
-    public void instantSearchBoxPressed() {
+    public void instantSearchBoxPressed()
+    {
 
         MenuServiceImpl.getInstance().switchInstantSearch();
     }
 
-    public void DontCutCornersBoxClicked() {
+    public void DontCutCornersBoxClicked()
+    {
 
         MenuServiceImpl.getInstance().switchDontCrossCorners();
     }
 
-    public void heuristicsButtonPressed() {
+    public void heuristicsButtonPressed()
+    {
 
         MenuServiceImpl.getInstance().chooseHeuristics((RadioButton)heuristics.getSelectedToggle());
     }

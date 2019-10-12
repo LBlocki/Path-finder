@@ -23,7 +23,8 @@ import java.util.Optional;
  */
 @Getter
 @Setter
-public abstract class Algorithm {
+public abstract class Algorithm
+{
 
     private final Board board;
     private final GameState gameState;
@@ -33,7 +34,8 @@ public abstract class Algorithm {
 
     enum DRAW_TYPE {PARENT, CLOSED_LIST, OPEN_LIST}
 
-    Algorithm() {
+    Algorithm()
+    {
 
         this.board = Board.getInstance();
         this.gameState = GameState.getInstance();
@@ -66,83 +68,105 @@ public abstract class Algorithm {
      * @param nodesList This list holds all of the nodes on the board
      * @return Returns a list of all neighbours that meet the requirements
      */
-     List<AlgorithmNode> getChildren(AlgorithmNode node, List<List<AlgorithmNode>> nodesList) {
+     List<AlgorithmNode> getChildren(AlgorithmNode node, List<List<AlgorithmNode>> nodesList)
+     {
 
         List<AlgorithmNode> children = new LinkedList<>();
 
-        if (checkWest(node, nodesList)) {
+        if (checkWest(node, nodesList))
+        {
 
             children.add(nodesList.get(node.getHeight()).get(node.getWidth() - 1));
         }
 
-        if (checkEast(node, nodesList)) {
+        if (checkEast(node, nodesList))
+        {
 
             children.add(nodesList.get(node.getHeight()).get(node.getWidth() + 1));
         }
 
-        if (checkNorth(node, nodesList)) {
+        if (checkNorth(node, nodesList))
+        {
 
             children.add(nodesList.get(node.getHeight() - 1).get(node.getWidth()));
         }
 
-        if (checkSouth(node, nodesList)) {
+        if (checkSouth(node, nodesList))
+        {
 
             children.add(nodesList.get(node.getHeight() + 1).get(node.getWidth()));
         }
 
-        if (menu.isDiagonalSearch()) {
+        if (menu.isDiagonalSearch())
+        {
 
-            if (checkNorthWest(node, nodesList)) {
+            if (checkNorthWest(node, nodesList))
+            {
 
-                if (menu.isDontCutCorners()) {
+                if (menu.isDontCutCorners())
+                {
 
-                    if (checkWest(node, nodesList) || checkNorth(node, nodesList)) {
+                    if (checkWest(node, nodesList) || checkNorth(node, nodesList))
+                    {
 
                         children.add(nodesList.get(node.getHeight() - 1).get(node.getWidth() - 1));
                     }
-                } else {
+                } else
+                    {
 
                     children.add(nodesList.get(node.getHeight() - 1).get(node.getWidth() - 1));
                 }
             }
 
-            if (checkNorthEast(node, nodesList)) {
+            if (checkNorthEast(node, nodesList))
+            {
 
-                if (menu.isDontCutCorners()) {
+                if (menu.isDontCutCorners())
+                {
 
-                    if (checkEast(node, nodesList) || checkNorth(node, nodesList)) {
+                    if (checkEast(node, nodesList) || checkNorth(node, nodesList))
+                    {
 
                         children.add(nodesList.get(node.getHeight() - 1).get(node.getWidth() + 1));
                     }
-                } else {
+                } else
+                    {
 
                     children.add(nodesList.get(node.getHeight() - 1).get(node.getWidth() + 1));
                 }
             }
 
-            if (checkSouthWest(node, nodesList)) {
+            if (checkSouthWest(node, nodesList))
+            {
 
-                if (menu.isDontCutCorners()) {
+                if (menu.isDontCutCorners())
+                {
 
-                    if (checkWest(node, nodesList) || checkSouth(node, nodesList)) {
+                    if (checkWest(node, nodesList) || checkSouth(node, nodesList))
+                    {
 
                         children.add(nodesList.get(node.getHeight() + 1).get(node.getWidth() - 1));
                     }
-                } else {
+                } else
+                    {
 
                     children.add(nodesList.get(node.getHeight() + 1).get(node.getWidth() - 1));
                 }
             }
 
-            if (checkSouthEast(node, nodesList)) {
+            if (checkSouthEast(node, nodesList))
+            {
 
-                if (menu.isDontCutCorners()) {
+                if (menu.isDontCutCorners())
+                {
 
-                    if (checkEast(node, nodesList) || checkSouth(node, nodesList)) {
+                    if (checkEast(node, nodesList) || checkSouth(node, nodesList))
+                    {
 
                         children.add(nodesList.get(node.getHeight() + 1).get(node.getWidth() + 1));
                     }
-                } else {
+                } else
+                    {
 
                     children.add(nodesList.get(node.getHeight() + 1).get(node.getWidth() + 1));
                 }
@@ -157,62 +181,71 @@ public abstract class Algorithm {
      * specified by slider before continuing. Exception is if user wants instant search. Than program will
      * ignore this method and complete path finding as fast as possible.
      */
-    final void waitingTimer() {
+    final void waitingTimer()
+    {
 
         int time = (int) System.currentTimeMillis();
         while ((int) System.currentTimeMillis() - time < 400 / (menu.getSliderValue())) ;
     }
 
-    private boolean checkNorth(AlgorithmNode node, List<List<AlgorithmNode>> nodesList) {
+    private boolean checkNorth(AlgorithmNode node, List<List<AlgorithmNode>> nodesList)
+    {
 
         return node.getHeight() - 1 >= 0 &&
                 !nodesList.get(node.getHeight() - 1).get(node.getWidth()).isVisited() &&
                 nodesList.get(node.getHeight() - 1).get(node.getWidth()).get_node_type() != Node.NODE_TYPE.BLOCK;
     }
 
-    private boolean checkSouth(AlgorithmNode node, List<List<AlgorithmNode>> nodesList) {
+    private boolean checkSouth(AlgorithmNode node, List<List<AlgorithmNode>> nodesList)
+    {
 
         return node.getHeight() + 1 < board.getBoardHeight() &&
                 !nodesList.get(node.getHeight() + 1).get(node.getWidth()).isVisited() &&
                 nodesList.get(node.getHeight() + 1).get(node.getWidth()).get_node_type() != Node.NODE_TYPE.BLOCK;
     }
 
-    private boolean checkEast(AlgorithmNode node, List<List<AlgorithmNode>> nodesList) {
+    private boolean checkEast(AlgorithmNode node, List<List<AlgorithmNode>> nodesList)
+    {
 
         return node.getWidth() + 1 < board.getBoardWidth() &&
                 !nodesList.get(node.getHeight()).get(node.getWidth() + 1).isVisited() &&
                 nodesList.get(node.getHeight()).get(node.getWidth() + 1).get_node_type() != Node.NODE_TYPE.BLOCK;
     }
 
-    private boolean checkWest(AlgorithmNode node, List<List<AlgorithmNode>> nodesList) {
+    private boolean checkWest(AlgorithmNode node, List<List<AlgorithmNode>> nodesList)
+    {
 
         return node.getWidth() - 1 >= 0 &&
                 !nodesList.get(node.getHeight()).get(node.getWidth() - 1).isVisited() &&
                 nodesList.get(node.getHeight()).get(node.getWidth() - 1).get_node_type() != Node.NODE_TYPE.BLOCK;
     }
 
-    private boolean checkNorthWest(AlgorithmNode node, List<List<AlgorithmNode>> nodesList) {
+    private boolean checkNorthWest(AlgorithmNode node, List<List<AlgorithmNode>> nodesList)
+    {
 
         return node.getWidth() - 1 >= 0 && node.getHeight() - 1 >= 0 &&
                 !nodesList.get(node.getHeight() - 1).get(node.getWidth() - 1).isVisited() &&
                 nodesList.get(node.getHeight() - 1).get(node.getWidth() - 1).get_node_type() != Node.NODE_TYPE.BLOCK;
     }
 
-    private boolean checkSouthWest(AlgorithmNode node, List<List<AlgorithmNode>> nodesList) {
+    private boolean checkSouthWest(AlgorithmNode node, List<List<AlgorithmNode>> nodesList)
+    {
 
         return node.getHeight() + 1 < board.getBoardHeight() && node.getWidth() - 1 >= 0 &&
                 !nodesList.get(node.getHeight() + 1).get(node.getWidth() - 1).isVisited() &&
                 nodesList.get(node.getHeight() + 1).get(node.getWidth() - 1).get_node_type() != Node.NODE_TYPE.BLOCK;
     }
 
-    private boolean checkSouthEast(AlgorithmNode node, List<List<AlgorithmNode>> nodesList) {
+    private boolean checkSouthEast(AlgorithmNode node, List<List<AlgorithmNode>> nodesList)
+    {
 
         return node.getHeight() + 1 < board.getBoardHeight() && node.getWidth() + 1 < board.getBoardWidth()
                 && !nodesList.get(node.getHeight() + 1).get(node.getWidth() + 1).isVisited() &&
                 nodesList.get(node.getHeight() + 1).get(node.getWidth() + 1).get_node_type() != Node.NODE_TYPE.BLOCK;
     }
 
-    private boolean checkNorthEast(AlgorithmNode node, List<List<AlgorithmNode>> nodesList) {
+    private boolean checkNorthEast(AlgorithmNode node, List<List<AlgorithmNode>> nodesList)
+    {
 
         return node.getWidth() + 1 < board.getBoardWidth() && node.getHeight() - 1 >= 0 &&
                 !nodesList.get(node.getHeight() - 1).get(node.getWidth() + 1).isVisited() &&
@@ -225,9 +258,11 @@ public abstract class Algorithm {
      * @param node node that is passed to be colored on board
      * @param draw_type type of the node. It determines the color
      */
-    private void draw(GridPane gridPane, Node node, DRAW_TYPE draw_type) {
+    private void draw(GridPane gridPane, Node node, DRAW_TYPE draw_type)
+    {
 
-        if (!node.get_node_type().equals(Node.NODE_TYPE.END) && !node.get_node_type().equals(Node.NODE_TYPE.START)) {
+        if (!node.get_node_type().equals(Node.NODE_TYPE.END) && !node.get_node_type().equals(Node.NODE_TYPE.START))
+        {
 
             Optional<javafx.scene.Node> tilePane = gridPane.getChildren()
                     .stream()
@@ -235,7 +270,8 @@ public abstract class Algorithm {
                     .filter(kid -> GridPane.getColumnIndex(kid).equals(node.getWidth()))
                     .findFirst();
 
-            switch (draw_type) {
+            switch (draw_type)
+            {
 
                 case PARENT:
                     tilePane
@@ -260,9 +296,11 @@ public abstract class Algorithm {
      * @return If users presses stop after pressing start then it will return true meaning algorithm should stop working entirely
      * @throws InterruptedException Uses Thread.sleep so exception is needed
      */
-    boolean checkForInterruptions() throws InterruptedException {
+    boolean checkForInterruptions() throws InterruptedException
+    {
 
-        while (gameState.getCurrentState() == GameState.STATE.PAUSED) {
+        while (gameState.getCurrentState() == GameState.STATE.PAUSED)
+        {
 
             Thread.sleep(100);
         }
@@ -294,13 +332,17 @@ public abstract class Algorithm {
                          AlgorithmNode child,
                          Integer totalOperations,
                          List<AlgorithmNode> openList,
-                         List<AlgorithmNode> closedList) throws Exception {
+                         List<AlgorithmNode> closedList) throws Exception
+    {
 
-        if (child.get_node_type() == Node.NODE_TYPE.END) {
+        if (child.get_node_type() == Node.NODE_TYPE.END)
+        {
 
-            if (menu.isInstantSearch()) {
+            if (menu.isInstantSearch())
+            {
 
-                Platform.runLater(() -> {
+                Platform.runLater(() ->
+                {
 
                     closedList.forEach(node -> draw(gridPane, node, DRAW_TYPE.CLOSED_LIST));
                     openList.forEach(node -> draw(gridPane, node, DRAW_TYPE.OPEN_LIST));
@@ -312,9 +354,11 @@ public abstract class Algorithm {
             Platform.runLater(() -> draw(gridPane, currentNode, DRAW_TYPE.PARENT));
             totalLength = 0;
 
-            while (child.getParent().get_node_type() != Node.NODE_TYPE.START) {
+            while (child.getParent().get_node_type() != Node.NODE_TYPE.START)
+            {
 
-                if(! checkForInterruptions()) {
+                if(! checkForInterruptions())
+                {
                     Platform.runLater(openList::clear);
                     Platform.runLater(closedList::clear);
                     break;
@@ -356,11 +400,14 @@ public abstract class Algorithm {
      *                   then we cant draw as we go
      */
     void prepareToReturn(GridPane gridPane, AnchorPane option, Button stopOrPauseButton, List<AlgorithmNode> openList,
-                         List<AlgorithmNode> closedList) {
+                         List<AlgorithmNode> closedList)
+    {
 
-        if (menu.isInstantSearch()) {
+        if (menu.isInstantSearch())
+        {
 
-            Platform.runLater(() -> {
+            Platform.runLater(() ->
+            {
 
                 openList.forEach(node -> draw(gridPane, node, DRAW_TYPE.OPEN_LIST));
                 closedList.forEach(node -> draw(gridPane, node, DRAW_TYPE.CLOSED_LIST));
@@ -386,16 +433,20 @@ public abstract class Algorithm {
      */
 
     void addToOpenListUpdateGrid(GridPane gridPane, AnchorPane option, int totalOperations, AlgorithmNode child,
-                                 List<AlgorithmNode> openList, List<AlgorithmNode> closedList) {
-        if (menu.isInstantSearch()) {
+                                 List<AlgorithmNode> openList, List<AlgorithmNode> closedList)
+    {
+        if (menu.isInstantSearch())
+        {
 
             openList.add(child);
             closedList.remove(child);
 
-        } else {
+        } else
+            {
 
             final Integer finalTotalOperations = totalOperations;
-            Platform.runLater(() -> {
+            Platform.runLater(() ->
+            {
 
                 draw(gridPane, child, DRAW_TYPE.OPEN_LIST);
                 ((Label) (option.lookup("#operationsAmount"))).setText(String.valueOf(finalTotalOperations));
@@ -416,16 +467,20 @@ public abstract class Algorithm {
      * @param totalOperations Total operations - adding to open and close lists
      */
     void addToClosedListUpdateGrid(GridPane gridPane, AnchorPane option, int totalOperations, AlgorithmNode child,
-                                   List<AlgorithmNode> openList, List<AlgorithmNode> closedList) {
-        if (menu.isInstantSearch()) {
+                                   List<AlgorithmNode> openList, List<AlgorithmNode> closedList)
+    {
+        if (menu.isInstantSearch())
+        {
 
             openList.remove(child);
             closedList.add(child);
 
-        } else {
+        } else
+            {
 
             final Integer finalTotalOperations = totalOperations;
-            Platform.runLater(() -> {
+            Platform.runLater(() ->
+            {
 
                 draw(gridPane, child, DRAW_TYPE.CLOSED_LIST);
                 ((Label) (option.lookup("#operationsAmount"))).setText(String.valueOf(finalTotalOperations));

@@ -10,7 +10,8 @@ import lombok.Setter;
  */
 @Setter
 @Getter
-public class Menu {
+public class Menu
+{
 
     public enum ALGORITHM_TYPE {A_star, Dijkstra, BFS, DFS, Greedy}
 
@@ -36,14 +37,15 @@ public class Menu {
      * This ensures its a singleton
      * @return if its the first call, method will create new object, otherwise it will return existing one
      */
-    public static Menu getInstance() {
+    public static Menu getInstance()
+    {
 
-        if(instance == null) {
+        if(instance == null)
+        {
 
             instance = new Menu();
         }
 
         return instance;
     }
-
 }

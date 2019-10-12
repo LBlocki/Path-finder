@@ -7,7 +7,8 @@ import javafx.scene.layout.GridPane;
 /**
  *Implementations of this interface handle running and stopping/pausing the algorithms.
  */
-public interface RunningService {
+public interface RunningService
+{
 
     /**
      * This method executes chosen algorithm on a new thread

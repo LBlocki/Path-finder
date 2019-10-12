@@ -8,7 +8,8 @@ import javafx.scene.layout.GridPane;
  *Implementations of this interface handle many interactions between user and program such as
  *placing blocks, starting points and ending points on board
  */
-public interface BoardService {
+public interface BoardService
+{
 
     /**
      * This method initializes entire board, that is drawing initial tiles etc

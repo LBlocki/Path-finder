@@ -12,7 +12,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
-public class DFSAlgorithm extends Algorithm {
+public class DFSAlgorithm extends Algorithm
+{
 
     private List<List<AlgorithmNode>> nodeList = new LinkedList<>();
 
@@ -25,7 +26,8 @@ public class DFSAlgorithm extends Algorithm {
     private Integer totalOperations;
 
     @Override
-    void prepare() {
+    void prepare()
+    {
 
         nodeList.clear();
         stack.clear();
@@ -36,17 +38,20 @@ public class DFSAlgorithm extends Algorithm {
         totalLength = 0;
 
         int i = 0;
-        for (List<Node> nodes : super.getBoard().getBoardNodes()) {
+        for (List<Node> nodes : super.getBoard().getBoardNodes())
+        {
 
             nodeList.add(new LinkedList<>());
 
-            for (Node node : nodes) {
+            for (Node node : nodes)
+            {
 
                 AlgorithmNode insideNode = new AlgorithmNode(node.getWidth(), node.getHeight(), node.get_node_type());
                 insideNode.setVisited(false);
                 insideNode.setChildren(new LinkedList<>());
 
-                if(insideNode.get_node_type() == Node.NODE_TYPE.START) {
+                if(insideNode.get_node_type() == Node.NODE_TYPE.START)
+                {
 
                     insideNode.setVisited(true);
                     stack.add(insideNode);
@@ -59,7 +64,8 @@ public class DFSAlgorithm extends Algorithm {
     }
 
     @Override
-    public void run(GridPane gridPane, AnchorPane option, Button stopOrPauseButton) throws Exception {
+    public void run(GridPane gridPane, AnchorPane option, Button stopOrPauseButton) throws Exception
+    {
 
         prepare();
         Platform.runLater(() -> ((Label) (option.lookup("#pathLength"))).setText(String.valueOf(totalLength)));
@@ -69,9 +75,11 @@ public class DFSAlgorithm extends Algorithm {
                 .filter(child -> !(child instanceof Label))
                 .forEach(button -> button.setDisable(true));
 
-        while(!stack.empty()) {
+        while(!stack.empty())
+        {
 
-            if (!super.checkForInterruptions()) {
+            if (!super.checkForInterruptions())
+            {
 
                 break;
             }
@@ -84,24 +92,28 @@ public class DFSAlgorithm extends Algorithm {
 
             List<AlgorithmNode> children = super.getChildren(currentNode, nodeList);
 
-            for (AlgorithmNode child : children) {
+            for (AlgorithmNode child : children)
+            {
 
                 child.setParent(currentNode);
 
-                if(!stack.contains(child)) {
+                if(!stack.contains(child))
+                {
 
                     stack.add(child);
                     totalOperations++;
                     super.addToOpenListUpdateGrid(gridPane, option, totalOperations, child, openList, closedList);
                 }
 
-                if (super.checkIfFound(gridPane, option, stopOrPauseButton, currentNode, child, totalOperations, openList, closedList)) {
+                if (super.checkIfFound(gridPane, option, stopOrPauseButton, currentNode, child, totalOperations, openList, closedList))
+                {
 
                     prepareToReturn(gridPane, option, stopOrPauseButton, openList, closedList);
                     return;
                 }
 
-                if (!super.getMenu().isInstantSearch()) {
+                if (!super.getMenu().isInstantSearch())
+                {
 
                     super.waitingTimer();
                 }
