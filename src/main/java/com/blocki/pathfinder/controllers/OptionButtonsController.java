@@ -15,7 +15,7 @@ public class OptionButtonsController {
 
     public void algorithmButtonPressed() {
 
-      MenuServiceImpl.getInstance().chooseAlgorithm((RadioButton)algorithms.getSelectedToggle());
+      MenuServiceImpl.getInstance().chooseAlgorithm(heuristics, (RadioButton)algorithms.getSelectedToggle());
     }
 
     public void diagonalSearchBoxPressed() {

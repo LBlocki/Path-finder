@@ -22,7 +22,7 @@ public class Menu {
 
     private boolean dontCutCorners = false;
 
-    private ALGORITHM_TYPE chosenAlgorithm = ALGORITHM_TYPE.Dijkstra;
+    private ALGORITHM_TYPE chosenAlgorithm = ALGORITHM_TYPE.A_star;
 
     private HEURISTIC_TYPE chosenHeuristics= HEURISTIC_TYPE.Manhattan;
 

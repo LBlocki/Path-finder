@@ -2,7 +2,9 @@ package com.blocki.pathfinder.services;
 
 import com.blocki.pathfinder.models.singletons.GameState;
 import com.blocki.pathfinder.models.singletons.Menu;
+import javafx.scene.Node;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 
 public class MenuServiceImpl implements MenuService {
 
@@ -13,7 +15,7 @@ public class MenuServiceImpl implements MenuService {
     private final GameState gameState = GameState.getInstance();
 
     @Override
-    public void chooseAlgorithm(RadioButton radioButton) {
+    public void chooseAlgorithm(ToggleGroup heuristics, RadioButton radioButton) {
 
         if(gameState.getCurrentState() == GameState.STATE.WAITING) {
 
@@ -25,6 +27,51 @@ public class MenuServiceImpl implements MenuService {
 
                 ex.printStackTrace();
             }
+        }
+
+        switch (menu.getChosenAlgorithm()) {
+
+            case A_star:
+                heuristics.getToggles().forEach(toggle -> {
+                    Node node = (Node) toggle ;
+                    node.setDisable(false);
+                });
+                break;
+
+            case Dijkstra:
+                heuristics.getToggles().forEach(toggle -> {
+                    Node node = (Node) toggle ;
+                    node.setDisable(true);
+                });
+                break;
+
+            case BFS:
+                heuristics.getToggles().forEach(toggle -> {
+                    Node node = (Node) toggle ;
+                    node.setDisable(true);
+                });
+                break;
+
+            case DFS:
+                heuristics.getToggles().forEach(toggle -> {
+                    Node node = (Node) toggle ;
+                    node.setDisable(true);
+                });
+                break;
+
+            case Greedy:
+                heuristics.getToggles().forEach(toggle -> {
+                    Node node = (Node) toggle ;
+                    node.setDisable(false);
+                });
+                break;
+
+            case JPS:
+                heuristics.getToggles().forEach(toggle -> {
+                    Node node = (Node) toggle ;
+                    node.setDisable(false);
+                });
+                break;
         }
     }
 
