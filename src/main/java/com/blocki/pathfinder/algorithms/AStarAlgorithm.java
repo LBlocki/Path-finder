@@ -4,6 +4,7 @@ import com.blocki.pathfinder.models.nodes.AlgorithmNode;
 import com.blocki.pathfinder.models.nodes.Node;
 import javafx.application.Platform;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
@@ -19,6 +20,8 @@ public class AStarAlgorithm extends DistanceCalculatingAlgorithm {
 
     private Queue<AlgorithmNode> queue = new PriorityQueue<>(Comparator.comparingDouble(AlgorithmNode::getTotalDistance));
 
+    private Integer totalOperations;
+
     @Override
     final void prepare() {
 
@@ -26,6 +29,9 @@ public class AStarAlgorithm extends DistanceCalculatingAlgorithm {
         nodesList.clear();
         openList.clear();
         closedList.clear();
+
+        totalOperations = 0;
+        totalLength = 0;
 
         int i = 0;
         for (List<Node> nodes : super.getBoard().getBoardNodes()) {
@@ -59,32 +65,25 @@ public class AStarAlgorithm extends DistanceCalculatingAlgorithm {
     public void run(GridPane gridPane, AnchorPane option, Button stopOrPauseButton) throws Exception {
 
         prepare();
-        option.getChildren().forEach(button -> button.setDisable(true));
+        Platform.runLater(() -> ((Label) (option.lookup("#pathLength"))).setText(String.valueOf(totalLength)));
+        Platform.runLater(() -> ((Label) (option.lookup("#operationsAmount"))).setText(String.valueOf(totalOperations)));
+        option.getChildren()
+                .stream()
+                .filter(child -> !(child instanceof Label))
+                .forEach(button -> button.setDisable(true));
 
         while (!queue.isEmpty()) {
 
             AlgorithmNode currentNode = queue.poll();
             currentNode.setVisited(true);
 
+            totalOperations++;
             if (!super.checkForInterruptions()) {
 
                 break;
             }
 
-            if (super.getMenu().isInstantSearch()) {
-
-                closedList.add(currentNode);
-                openList.remove(currentNode);
-            } else {
-
-                Platform.runLater(() -> draw(gridPane, currentNode, DRAW_TYPE.CLOSED_LIST));
-            }
-
-            if (super.checkIfFound(gridPane, option, stopOrPauseButton, currentNode, currentNode, openList, closedList)) {
-
-                prepareToReturn(gridPane, option, stopOrPauseButton, openList, closedList);
-                return;
-            }
+            super.addToClosedListUpdateGrid(gridPane, option, totalOperations, currentNode, openList, closedList);
 
             List<AlgorithmNode> children = super.getChildren(currentNode, nodesList);
 
@@ -101,16 +100,9 @@ public class AStarAlgorithm extends DistanceCalculatingAlgorithm {
                             super.calculateDistanceBetween2neighbourNodes(currentNode, child));
                     child.setDistanceToEnd( super.calculateDistanceToEndNode(child));
                     queue.add(child);
+                    totalOperations++;
 
-                    if (super.getMenu().isInstantSearch()) {
-
-                        openList.add(child);
-                        closedList.remove(child);
-
-                    } else {
-
-                        Platform.runLater(() -> draw(gridPane, child, DRAW_TYPE.OPEN_LIST));
-                    }
+                    super.addToOpenListUpdateGrid(gridPane, option, totalOperations, child, openList, closedList);
                 }
 
                 else if (tempDistance < child.getTotalDistance()) {
@@ -119,18 +111,16 @@ public class AStarAlgorithm extends DistanceCalculatingAlgorithm {
                             super.calculateDistanceBetween2neighbourNodes(currentNode, child));
 
                     child.setDistanceToEnd(super.calculateDistanceToEndNode(child));
-
+                    totalOperations++;
                     child.setParent(currentNode);
 
-                    if (super.getMenu().isInstantSearch()) {
+                    super.addToOpenListUpdateGrid(gridPane, option, totalOperations, child, openList, closedList);
+                }
 
-                        openList.add(child);
-                        closedList.remove(child);
+                if (super.checkIfFound(gridPane, option, stopOrPauseButton, currentNode, child,totalOperations, openList, closedList)) {
 
-                    } else {
-
-                        Platform.runLater(() -> draw(gridPane, child, DRAW_TYPE.OPEN_LIST));
-                    }
+                    prepareToReturn(gridPane, option, stopOrPauseButton, openList, closedList);
+                    return;
                 }
 
                 if (!super.getMenu().isInstantSearch()) {

@@ -48,12 +48,12 @@ abstract class DistanceCalculatingAlgorithm extends Algorithm {
                 Integer widthDistance = node.getWidth() - board.getEndingNode().getWidth();
                 Integer heightDistance = node.getHeight() - board.getEndingNode().getHeight();
 
-                return Math.sqrt(10 * (widthDistance * widthDistance + heightDistance* heightDistance));
+                return 10 * Math.sqrt((widthDistance * widthDistance + heightDistance* heightDistance));
 
             case Chebyshev:
 
-                return Math.max(10 * node.getWidth() - board.getEndingNode().getWidth(),
-                        Math.abs(10 * node.getHeight() - board.getEndingNode().getHeight()));
+                return 10 * Math.max( node.getWidth() - board.getEndingNode().getWidth(),
+                        Math.abs(node.getHeight() - board.getEndingNode().getHeight()));
 
         }
 

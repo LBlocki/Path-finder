@@ -5,6 +5,7 @@ import com.blocki.pathfinder.models.singletons.Board;
 import com.blocki.pathfinder.models.singletons.GameState;
 import com.blocki.pathfinder.models.singletons.Menu;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
@@ -124,10 +125,14 @@ public class RunningServiceImpl implements RunningService {
             gameState.setCurrentState(GameState.STATE.WAITING);
             options.getChildren().forEach(child -> child.setDisable(false));
             boardService.clearBoard(board, false);
+            ((Label) (options.lookup("#pathLength"))).setText(String.valueOf(0));
+            ((Label) (options.lookup("#operationsAmount"))).setText(String.valueOf(0));
 
         } else if (gameState.getCurrentState() == GameState.STATE.WAITING) {
 
             boardService.clearBoard(board, false);
+            ((Label) (options.lookup("#pathLength"))).setText(String.valueOf(0));
+            ((Label) (options.lookup("#operationsAmount"))).setText(String.valueOf(0));
         }
     }
 }

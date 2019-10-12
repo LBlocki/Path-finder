@@ -7,6 +7,7 @@ import com.blocki.pathfinder.models.singletons.GameState;
 import com.blocki.pathfinder.models.singletons.Menu;
 import javafx.application.Platform;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import lombok.Getter;
@@ -24,6 +25,8 @@ abstract class Algorithm {
     private final GameState gameState;
     private final Menu menu;
 
+    Integer totalLength;
+
     enum DRAW_TYPE {PARENT, CLOSED_LIST, OPEN_LIST}
 
     Algorithm() {
@@ -31,6 +34,8 @@ abstract class Algorithm {
         this.board = Board.getInstance();
         this.gameState = GameState.getInstance();
         this.menu = Menu.getInstance();
+
+        totalLength = 0;
     }
 
     public abstract void run(GridPane gridPane,AnchorPane option,  Button stopOrPauseButton) throws Exception;
@@ -185,7 +190,7 @@ abstract class Algorithm {
                 nodesList.get(node.getHeight() - 1).get(node.getWidth() + 1).get_node_type() != Node.NODE_TYPE.BLOCK;
     }
 
-    void draw(GridPane gridPane, Node node, DRAW_TYPE draw_type) {
+    private void draw(GridPane gridPane, Node node, DRAW_TYPE draw_type) {
 
         if (!node.get_node_type().equals(Node.NODE_TYPE.END) && !node.get_node_type().equals(Node.NODE_TYPE.START)) {
 
@@ -230,8 +235,9 @@ abstract class Algorithm {
                          Button stopOrPauseButton,
                          AlgorithmNode currentNode,
                          AlgorithmNode child,
+                         Integer totalOperations,
                          List<AlgorithmNode> openList,
-                         List<AlgorithmNode> closedList) {
+                         List<AlgorithmNode> closedList) throws Exception {
 
         if (child.get_node_type() == Node.NODE_TYPE.END) {
 
@@ -239,15 +245,24 @@ abstract class Algorithm {
 
                 Platform.runLater(() -> {
 
-                    openList.forEach(node -> draw(gridPane, node, DRAW_TYPE.OPEN_LIST));
                     closedList.forEach(node -> draw(gridPane, node, DRAW_TYPE.CLOSED_LIST));
+                    openList.forEach(node -> draw(gridPane, node, DRAW_TYPE.OPEN_LIST));
+
                 });
             }
 
+            Platform.runLater(() -> ((Label) (option.lookup("#operationsAmount"))).setText(String.valueOf(totalOperations)));
             Platform.runLater(() -> draw(gridPane, currentNode, DRAW_TYPE.PARENT));
+            totalLength = 0;
 
             while (child.getParent().get_node_type() != Node.NODE_TYPE.START) {
 
+                if(! checkForInterruptions()) {
+                    Platform.runLater(openList::clear);
+                    Platform.runLater(closedList::clear);
+                    break;
+                }
+                totalLength++;
                 waitingTimer();
 
                 child = child.getParent();
@@ -257,6 +272,7 @@ abstract class Algorithm {
 
                 Platform.runLater(() ->openList.remove(finalChild));
                 Platform.runLater(() ->closedList.remove(finalChild));
+                Platform.runLater(() -> ((Label) (option.lookup("#pathLength"))).setText(String.valueOf(totalLength)));
             }
 
             getGameState().setCurrentState(GameState.STATE.WAITING);
@@ -284,5 +300,41 @@ abstract class Algorithm {
         Platform.runLater(() ->stopOrPauseButton.setText("Stop"));
         option.getChildren().forEach(button -> button.setDisable(false));
         getGameState().setCurrentState(GameState.STATE.WAITING);
+    }
+
+    void addToOpenListUpdateGrid(GridPane gridPane, AnchorPane option, int totalOperations, AlgorithmNode child,
+                                 List<AlgorithmNode> openList, List<AlgorithmNode> closedList) {
+        if (menu.isInstantSearch()) {
+
+            openList.add(child);
+            closedList.remove(child);
+
+        } else {
+
+            final Integer finalTotalOperations = totalOperations;
+            Platform.runLater(() -> {
+
+                draw(gridPane, child, DRAW_TYPE.OPEN_LIST);
+                ((Label) (option.lookup("#operationsAmount"))).setText(String.valueOf(finalTotalOperations));
+            });
+        }
+    }
+
+    void addToClosedListUpdateGrid(GridPane gridPane, AnchorPane option, int totalOperations, AlgorithmNode child,
+                                   List<AlgorithmNode> openList, List<AlgorithmNode> closedList) {
+        if (menu.isInstantSearch()) {
+
+            openList.remove(child);
+            closedList.add(child);
+
+        } else {
+
+            final Integer finalTotalOperations = totalOperations;
+            Platform.runLater(() -> {
+
+                draw(gridPane, child, DRAW_TYPE.CLOSED_LIST);
+                ((Label) (option.lookup("#operationsAmount"))).setText(String.valueOf(finalTotalOperations));
+            });
+        }
     }
 }
