@@ -10,7 +10,8 @@ import javafx.scene.layout.GridPane;
 
 import java.util.*;
 
-public class GreedyAlgorithm extends DistanceCalculatingAlgorithm {
+public class GreedyAlgorithm extends DistanceCalculatingAlgorithm
+{
 
     private List<List<AlgorithmNode>> nodesList = new LinkedList<>();
 
@@ -23,7 +24,8 @@ public class GreedyAlgorithm extends DistanceCalculatingAlgorithm {
     private Integer totalOperations;
 
     @Override
-    final void prepare() {
+    final void prepare()
+    {
 
         queue.clear();
         nodesList.clear();
@@ -34,11 +36,13 @@ public class GreedyAlgorithm extends DistanceCalculatingAlgorithm {
         totalLength = 0;
 
         int i = 0;
-        for (List<Node> nodes : super.getBoard().getBoardNodes()) {
+        for (List<Node> nodes : super.getBoard().getBoardNodes())
+        {
 
             nodesList.add(new LinkedList<>());
 
-            for (Node node : nodes) {
+            for (Node node : nodes)
+            {
 
                 AlgorithmNode insideNode = new AlgorithmNode(node.getWidth(), node.getHeight(), node.get_node_type());
                 insideNode.setVisited(false);
@@ -46,7 +50,8 @@ public class GreedyAlgorithm extends DistanceCalculatingAlgorithm {
                 insideNode.setParent(null);
                 insideNode.setDistanceToEnd(Double.MAX_VALUE);
 
-                if (insideNode.get_node_type() == Node.NODE_TYPE.START) {
+                if (insideNode.get_node_type() == Node.NODE_TYPE.START)
+                {
 
                     insideNode.setDistanceToEnd(super.calculateDistanceToEndNode(insideNode));
                     queue.add(insideNode);
@@ -69,20 +74,23 @@ public class GreedyAlgorithm extends DistanceCalculatingAlgorithm {
                 .filter(child -> !(child instanceof Label))
                 .forEach(button -> button.setDisable(true));
 
-        while (!queue.isEmpty()) {
+        while (!queue.isEmpty())
+        {
 
             AlgorithmNode currentNode = queue.poll();
             currentNode.setVisited(true);
             totalOperations++;
 
-            if (!super.checkForInterruptions()) {
+            if (!super.checkForInterruptions())
+            {
 
                 break;
             }
 
             super.addToClosedListUpdateGrid(gridPane, option, totalOperations, currentNode, openList, closedList);
 
-            if (super.checkIfFound(gridPane, option, stopOrPauseButton, currentNode, currentNode, totalOperations, openList, closedList)) {
+            if (super.checkIfFound(gridPane, option, stopOrPauseButton, currentNode, currentNode, totalOperations, openList, closedList))
+            {
 
                 prepareToReturn(gridPane, option, stopOrPauseButton, openList, closedList);
                 return;
@@ -90,19 +98,22 @@ public class GreedyAlgorithm extends DistanceCalculatingAlgorithm {
 
             List<AlgorithmNode> children = super.getChildren(currentNode, nodesList);
 
-            for (AlgorithmNode child : children) {
+            for (AlgorithmNode child : children)
+            {
 
                 child.setDistanceToEnd(super.calculateDistanceToEndNode(child));
                 totalOperations++;
 
-                if (!queue.contains(child)) {
+                if (!queue.contains(child))
+                {
                     child.setParent(currentNode);
                     queue.add(child);
 
                     super.addToOpenListUpdateGrid(gridPane, option, totalOperations, child, openList, closedList);
                 }
 
-                if (!super.getMenu().isInstantSearch()) {
+                if (!super.getMenu().isInstantSearch())
+                {
 
                     super.waitingTimer();
                 }

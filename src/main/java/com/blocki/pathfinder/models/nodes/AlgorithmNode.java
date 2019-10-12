@@ -1,15 +1,19 @@
 package com.blocki.pathfinder.models.nodes;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * This class is used as extended version on Node algorithm. It holds fields that are useful to the algorithm
+ * during path finding.
+ */
 @Getter
 @Setter
-public class AlgorithmNode extends Node {
+public class AlgorithmNode extends Node
+{
 
     private List<AlgorithmNode> children;
 
@@ -21,7 +25,8 @@ public class AlgorithmNode extends Node {
 
     private AlgorithmNode parent;
 
-    public AlgorithmNode(Integer width, Integer height, NODE_TYPE _node_type) {
+    public AlgorithmNode(Integer width, Integer height, NODE_TYPE _node_type)
+    {
 
         super(width, height, _node_type);
 
@@ -32,7 +37,8 @@ public class AlgorithmNode extends Node {
         distanceToStart = 0.0;
     }
 
-    public final Double getTotalDistance() {
+    public final Double getTotalDistance()
+    {
 
         return distanceToEnd + distanceToStart;
     }

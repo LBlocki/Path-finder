@@ -8,7 +8,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
 
-public class BoardServiceImpl implements BoardService {
+public class BoardServiceImpl implements BoardService
+{
 
     private static BoardServiceImpl instance = null;
 
@@ -23,10 +24,13 @@ public class BoardServiceImpl implements BoardService {
     private boolean mouseEntered = false;
 
     @Override
-    public void initializeBoard(GridPane gridPane) {
+    public void initializeBoard(GridPane gridPane)
+    {
 
-        for (int i = 0; i < board.getBoardHeight(); i++) {
-            for (int j = 0; j < board.getBoardWidth(); j++) {
+        for (int i = 0; i < board.getBoardHeight(); i++)
+        {
+            for (int j = 0; j < board.getBoardWidth(); j++)
+            {
 
                 TilePane rec = new TilePane();
                 rec.setPrefSize(30, 30);
@@ -38,7 +42,8 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public void handleClick(MouseEvent event, GridPane gridPane) {
+    public void handleClick(MouseEvent event, GridPane gridPane)
+    {
 
         javafx.scene.Node clickedNode = event.getPickResult().getIntersectedNode();
 
@@ -47,11 +52,14 @@ public class BoardServiceImpl implements BoardService {
 
         Node node = board.getBoardNodes().get(rowIndex).get(colIndex);
 
-        if (gameState.getCurrentState() == GameState.STATE.WAITING && mouseEntered) {
+        if (gameState.getCurrentState() == GameState.STATE.WAITING && mouseEntered)
+        {
 
-            if (event.getButton().name().equals("PRIMARY")) {
+            if (event.getButton().name().equals("PRIMARY"))
+            {
 
-                if (startKeyPressed) {
+                if (startKeyPressed)
+                {
 
                     gridPane
                             .getChildren()
@@ -62,7 +70,8 @@ public class BoardServiceImpl implements BoardService {
 
                     handleClickStartNode(event, node);
 
-                } else if (endKeyPressed) {
+                } else if (endKeyPressed)
+                {
 
                     gridPane
                             .getChildren()
@@ -74,7 +83,8 @@ public class BoardServiceImpl implements BoardService {
 
                     handleClickEndNode(event, node);
 
-                } else {
+                } else
+                    {
 
                     checkForStartEndNode(node);
                     node.set_node_type(Node.NODE_TYPE.BLOCK);
@@ -82,7 +92,8 @@ public class BoardServiceImpl implements BoardService {
                     event.getPickResult().getIntersectedNode()
                             .setStyle(board.getBlockTileColor());
                 }
-            } else if (event.getButton().name().equals("SECONDARY")) {
+            } else if (event.getButton().name().equals("SECONDARY"))
+            {
 
                 checkForStartEndNode(node);
                 node.set_node_type(Node.NODE_TYPE.CLEAN);
@@ -95,16 +106,21 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public void clearBoard(GridPane gridPane, boolean includeSpecialNodes) {
+    public void clearBoard(GridPane gridPane, boolean includeSpecialNodes)
+    {
 
-        if (gameState.getCurrentState() == GameState.STATE.WAITING) {
+        if (gameState.getCurrentState() == GameState.STATE.WAITING)
+        {
 
-            for (int i = 0; i < board.getBoardHeight(); i++) {
-                for (int j = 0; j < board.getBoardWidth(); j++) {
+            for (int i = 0; i < board.getBoardHeight(); i++)
+            {
+                for (int j = 0; j < board.getBoardWidth(); j++)
+                {
 
                     Node node =  board.getBoardNodes().get(i).get(j);
 
-                    if(includeSpecialNodes) {
+                    if(includeSpecialNodes)
+                    {
                         node.set_node_type(Node.NODE_TYPE.CLEAN);
                         board.setStartChosen(false);
                         board.setEndChosen(false);
@@ -112,7 +128,8 @@ public class BoardServiceImpl implements BoardService {
                 }
             }
 
-            if(!includeSpecialNodes) {
+            if(!includeSpecialNodes)
+            {
 
                 gridPane
                         .getChildren()
@@ -123,7 +140,8 @@ public class BoardServiceImpl implements BoardService {
                         .forEach(child -> child.setStyle(board.getCleanTileColor()));
             }
 
-            else {
+            else
+                {
                 gridPane
                         .getChildren()
                         .forEach(child -> child.setStyle(board.getCleanTileColor()));
@@ -132,44 +150,53 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public void keyPressed(KeyEvent event) {
+    public void keyPressed(KeyEvent event)
+    {
 
-        if (event.getCode().getName().equals("S")) {
+        if (event.getCode().getName().equals("S"))
+        {
             startKeyPressed = true;
         }
 
-        else if (event.getCode().getName().equals("E")) {
+        else if (event.getCode().getName().equals("E"))
+        {
             endKeyPressed = true;
         }
 
-        else {
+        else
+            {
             startKeyPressed = false;
             endKeyPressed = false;
         }
     }
 
     @Override
-    public void keyReleased() {
+    public void keyReleased()
+    {
 
         startKeyPressed = false;
         endKeyPressed = false;
     }
 
     @Override
-    public void mouseEntered() {
+    public void mouseEntered()
+    {
 
         mouseEntered = true;
     }
 
     @Override
-    public void mouseLeft() {
+    public void mouseLeft()
+    {
 
         mouseEntered = false;
     }
 
-    public static BoardServiceImpl getInstance() {
+    public static BoardServiceImpl getInstance()
+    {
 
-        if(instance == null) {
+        if(instance == null)
+        {
 
             instance = new BoardServiceImpl();
         }
@@ -177,12 +204,15 @@ public class BoardServiceImpl implements BoardService {
         return instance;
     }
 
-    private void checkForStartEndNode(Node node) {
+    private void checkForStartEndNode(Node node)
+    {
 
-        if (node.get_node_type() == Node.NODE_TYPE.START) {
+        if (node.get_node_type() == Node.NODE_TYPE.START)
+        {
 
             board.setStartChosen(false);
-        } else if (node.get_node_type() == Node.NODE_TYPE.END) {
+        } else if (node.get_node_type() == Node.NODE_TYPE.END)
+        {
 
             board.setEndChosen(false);
         }
@@ -190,12 +220,14 @@ public class BoardServiceImpl implements BoardService {
 
     private void handleClickStartNode(MouseEvent event, Node node) {
 
-        if(board.getStartingNode() != null) {
+        if(board.getStartingNode() != null)
+        {
 
             board.getStartingNode().set_node_type(Node.NODE_TYPE.CLEAN);
         }
 
-        if (node.get_node_type() == Node.NODE_TYPE.END) {
+        if (node.get_node_type() == Node.NODE_TYPE.END)
+        {
 
             board.setEndChosen(false);
         }
@@ -208,14 +240,17 @@ public class BoardServiceImpl implements BoardService {
                 .setStyle(board.getStartTileColor());
     }
 
-    private void handleClickEndNode(MouseEvent event, Node node) {
+    private void handleClickEndNode(MouseEvent event, Node node)
+    {
 
-        if(board.getEndingNode() != null) {
+        if(board.getEndingNode() != null)
+        {
 
             board.getEndingNode().set_node_type(Node.NODE_TYPE.CLEAN);
         }
 
-        if (node.get_node_type() == Node.NODE_TYPE.START) {
+        if (node.get_node_type() == Node.NODE_TYPE.START)
+        {
 
             board.setStartChosen(false);
         }

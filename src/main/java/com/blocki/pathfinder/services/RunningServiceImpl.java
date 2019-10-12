@@ -9,7 +9,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
-public class RunningServiceImpl implements RunningService {
+public class RunningServiceImpl implements RunningService
+{
 
     private static RunningServiceImpl instance;
 
@@ -31,9 +32,11 @@ public class RunningServiceImpl implements RunningService {
 
     private final AStarAlgorithm astar = new AStarAlgorithm();
 
-    public static RunningServiceImpl getInstance() {
+    public static RunningServiceImpl getInstance()
+    {
 
-        if(instance == null) {
+        if(instance == null)
+        {
 
             instance = new RunningServiceImpl();
         }
@@ -42,25 +45,31 @@ public class RunningServiceImpl implements RunningService {
     }
 
     @Override
-    public void runAlgorithm(GridPane gridPane, AnchorPane options, Button stopPauseButton) {
+    public void runAlgorithm(GridPane gridPane, AnchorPane options, Button stopPauseButton)
+    {
 
         if (gameState.getCurrentState() == GameState.STATE.WAITING
-        && board.isEndChosen() && board.isStartChosen()) {
+        && board.isEndChosen() && board.isStartChosen())
+        {
 
             boardService.clearBoard(gridPane, false);
             gameState.setCurrentState(GameState.STATE.ACTIVE);
             stopPauseButton.setText("Pause");
 
-            Thread thread = new Thread((new Runnable() {
+            Thread thread = new Thread((new Runnable()
+            {
 
                 GridPane gridPane;
                 AnchorPane option;
                 Button stopButton;
 
-                public void run() {
+                public void run()
+                {
                 //without all filled choosing empty one breaks program ( not ended thread)
-                    try {
-                        switch (menu.getChosenAlgorithm()) {
+                    try
+                    {
+                        switch (menu.getChosenAlgorithm())
+                        {
 
                             case A_star:
                                 astar.run(gridPane, option, stopButton);
@@ -84,12 +93,14 @@ public class RunningServiceImpl implements RunningService {
                         }
 
 
-                    } catch (Exception e) {
+                    } catch (Exception e)
+                    {
                         e.printStackTrace();
                     }
                 }
 
-                Runnable pass(GridPane gridPane) {
+                Runnable pass(GridPane gridPane)
+                {
                     this.gridPane = gridPane;
                     this.option = options;
                     this.stopButton = stopPauseButton;
@@ -102,7 +113,8 @@ public class RunningServiceImpl implements RunningService {
         }
 
         else if (gameState.getCurrentState() == GameState.STATE.PAUSED
-                && board.isEndChosen() && board.isStartChosen()) {
+                && board.isEndChosen() && board.isStartChosen())
+        {
 
             stopPauseButton.setText("Pause");
             gameState.setCurrentState(GameState.STATE.ACTIVE);
@@ -110,14 +122,17 @@ public class RunningServiceImpl implements RunningService {
     }
 
     @Override
-    public void pauseOrStopAlgorithm(GridPane board, Button stopPauseButton, AnchorPane options) {
+    public void pauseOrStopAlgorithm(GridPane board, Button stopPauseButton, AnchorPane options)
+    {
 
-        if (gameState.getCurrentState() == GameState.STATE.ACTIVE) {
+        if (gameState.getCurrentState() == GameState.STATE.ACTIVE)
+        {
 
             gameState.setCurrentState(GameState.STATE.PAUSED);
             stopPauseButton.setText("Stop");
 
-        } else if (gameState.getCurrentState() == GameState.STATE.PAUSED) {
+        } else if (gameState.getCurrentState() == GameState.STATE.PAUSED)
+        {
 
             gameState.setCurrentState(GameState.STATE.WAITING);
             options.getChildren().forEach(child -> child.setDisable(false));
@@ -125,7 +140,8 @@ public class RunningServiceImpl implements RunningService {
             ((Label) (options.lookup("#pathLength"))).setText(String.valueOf(0));
             ((Label) (options.lookup("#operationsAmount"))).setText(String.valueOf(0));
 
-        } else if (gameState.getCurrentState() == GameState.STATE.WAITING) {
+        } else if (gameState.getCurrentState() == GameState.STATE.WAITING)
+        {
 
             boardService.clearBoard(board, false);
             ((Label) (options.lookup("#pathLength"))).setText(String.valueOf(0));

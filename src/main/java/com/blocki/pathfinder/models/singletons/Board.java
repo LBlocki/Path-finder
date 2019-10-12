@@ -8,9 +8,14 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class holds information about board used in entire program
+ * so it is a singleton to ensure only one creation of an object of this class
+ */
 @Getter
 @Setter
-public class Board {
+public class Board
+{
 
     private List<List<Node>> boardNodes = new ArrayList<>();
 
@@ -44,27 +49,35 @@ public class Board {
 
     private final String endTileColor = "-fx-background-color: blue;";
 
-    private Board() {
+    private Board()
+    {
 
-        for(int i = 0; i  < boardHeight; i++) {
+        for(int i = 0; i  < boardHeight; i++)
+        {
 
             boardNodes.add(new ArrayList<>());
 
-            for(int j = 0; j < boardWidth; j++) {
+            for(int j = 0; j < boardWidth; j++)
+            {
 
                 boardNodes.get(i).add(new Node(j,i, Node.NODE_TYPE.CLEAN));
             }
         }
     }
 
-    public static Board getInstance() {
+    /**
+     * This ensures its a singleton
+     * @return if its the first call, method will create new object, otherwise it will return existing one
+     */
+    public static Board getInstance()
+    {
 
-        if(instance == null) {
+        if(instance == null)
+        {
 
             instance = new Board();
         }
 
         return instance;
     }
-
 }

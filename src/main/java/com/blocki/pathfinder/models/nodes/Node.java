@@ -5,9 +5,14 @@ import lombok.Setter;
 
 import java.util.Objects;
 
+/**
+ * This class is used by program mainly for viewing. It holds information useful during
+ * drawing and updating board
+ */
 @Getter
 @Setter
-public class Node {
+public class Node
+{
 
     public enum NODE_TYPE {BLOCK, START, END, CLEAN}
 
@@ -17,20 +22,24 @@ public class Node {
 
     private NODE_TYPE _node_type;
 
-    public Node(Integer width, Integer height, NODE_TYPE _node_type) {
+    public Node(Integer width, Integer height, NODE_TYPE _node_type)
+    {
         this.width = width;
         this.height = height;
         this._node_type = _node_type;
     }
 
     @Override
-    public boolean equals(Object object) {
+    public boolean equals(Object object)
+    {
 
-        if (this == object) {
+        if (this == object)
+        {
             return true;
         }
 
-        else if (object == null || getClass() != object.getClass()) {
+        else if (object == null || getClass() != object.getClass())
+        {
             return false;
         }
 
@@ -39,7 +48,8 @@ public class Node {
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         return Objects.hash(getWidth(), getHeight());
     }
 }

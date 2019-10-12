@@ -23,8 +23,8 @@ public class BFSAlgorithm extends Algorithm {
     private Integer totalOperations;
 
     @Override
-    final void prepare() {
-
+    final void prepare()
+    {
         nodeList.clear();
         queue.clear();
         openList.clear();
@@ -33,18 +33,21 @@ public class BFSAlgorithm extends Algorithm {
         totalLength = 0;
 
         int i = 0;
-        for (List<Node> nodes : super.getBoard().getBoardNodes()) {
+        for (List<Node> nodes : super.getBoard().getBoardNodes())
+        {
 
             nodeList.add(new LinkedList<>());
 
-            for (Node node : nodes) {
+            for (Node node : nodes)
+            {
 
                 AlgorithmNode insideNode = new AlgorithmNode(node.getWidth(), node.getHeight(), node.get_node_type());
 
                 insideNode.setVisited(false);
                 insideNode.setChildren(new LinkedList<>());
 
-                if(insideNode.get_node_type() == Node.NODE_TYPE.START) {
+                if(insideNode.get_node_type() == Node.NODE_TYPE.START)
+                {
 
                     insideNode.setVisited(true);
                     queue.add(insideNode);
@@ -57,7 +60,8 @@ public class BFSAlgorithm extends Algorithm {
     }
 
     @Override
-    public final void run(GridPane gridPane, AnchorPane option, Button stopOrPauseButton) throws Exception {
+    public final void run(GridPane gridPane, AnchorPane option, Button stopOrPauseButton) throws Exception
+    {
 
         prepare();
         Platform.runLater(() -> ((Label) (option.lookup("#pathLength"))).setText(String.valueOf(totalLength)));
@@ -67,7 +71,8 @@ public class BFSAlgorithm extends Algorithm {
                 .filter(child -> !(child instanceof Label))
                 .forEach(button -> button.setDisable(true));
 
-        while (!queue.isEmpty()) {
+        while (!queue.isEmpty())
+        {
 
             AlgorithmNode currentNode = queue.poll();
             totalOperations++;
@@ -75,12 +80,14 @@ public class BFSAlgorithm extends Algorithm {
 
             List<AlgorithmNode> children = super.getChildren(currentNode, nodeList);
 
-            if (!super.checkForInterruptions()) {
+            if (!super.checkForInterruptions())
+            {
 
                 break;
             }
 
-            for (AlgorithmNode child : children) {
+            for (AlgorithmNode child : children)
+            {
 
                 child.setParent(currentNode);
                 child.setVisited(true);
@@ -89,13 +96,15 @@ public class BFSAlgorithm extends Algorithm {
 
                 super.addToOpenListUpdateGrid(gridPane, option, totalOperations, child, openList, closedList);
 
-                if (checkIfFound(gridPane, option, stopOrPauseButton, currentNode, child,totalOperations, openList, closedList)) {
+                if (checkIfFound(gridPane, option, stopOrPauseButton, currentNode, child,totalOperations, openList, closedList))
+                {
 
                     prepareToReturn(gridPane, option, stopOrPauseButton, openList, closedList);
                     return;
                 }
 
-                if (!super.getMenu().isInstantSearch()) {
+                if (!super.getMenu().isInstantSearch())
+                {
 
                     super.waitingTimer();
                 }
