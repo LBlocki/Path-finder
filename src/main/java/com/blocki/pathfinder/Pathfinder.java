@@ -7,6 +7,16 @@ import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+/**
+ *PathFinder
+ * <p>
+ * This program visualizes in an interactive way work of most popular graph searching algorithms.
+ *
+ *
+ * @author  Łukasz Błocki
+ * @version 1.0
+ * @since   2019.12.10
+ */
 public class Pathfinder extends Application {
 
     @Override

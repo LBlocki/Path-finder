@@ -4,12 +4,20 @@ import com.blocki.pathfinder.models.nodes.AlgorithmNode;
 import com.blocki.pathfinder.models.singletons.Board;
 import com.blocki.pathfinder.models.singletons.Menu;
 
+/**
+ * Extends algorithm and adds methods that help more advanced algorithms using heuristics and distance
+ */
 abstract class DistanceCalculatingAlgorithm extends Algorithm {
 
     private final Board board = Board.getInstance();
 
     private final Menu menu = Menu.getInstance();
 
+    /**
+     * Calculates distance using heuristics chosen in the menu
+     * @param node Distance is measured from this node to the end
+     * @return returns distance as double value
+     */
     double calculateDistanceToEndNode(AlgorithmNode node) {
 
         switch (menu.getChosenHeuristics()) {
@@ -35,6 +43,12 @@ abstract class DistanceCalculatingAlgorithm extends Algorithm {
         return 0;
     }
 
+    /**
+     * Calculates distance between neighbour nodes depending if they are diagonal or not
+     * @param firstNode one of the 2 nodes
+     * @param secondNode second on of the 2 nodes
+     * @return returns distance as double value
+     */
     double calculateDistanceBetween2neighbourNodes(AlgorithmNode firstNode, AlgorithmNode secondNode) {
 
         if(firstNode.getWidth().equals(secondNode.getWidth()) || firstNode.getHeight().equals(secondNode.getHeight())) {

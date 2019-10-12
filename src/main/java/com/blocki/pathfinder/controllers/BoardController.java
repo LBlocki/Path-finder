@@ -9,6 +9,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
+/**
+ * This controller serves as main controllers controlling main button options and board
+ */
 public class BoardController {
 
     @FXML
@@ -20,6 +23,9 @@ public class BoardController {
     @FXML
     private GridPane board;
 
+    /**
+     * Draws initial look of the clean board
+     */
     @FXML
     void initialize(){
 

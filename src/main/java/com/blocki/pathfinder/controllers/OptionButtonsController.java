@@ -5,6 +5,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 
+/**
+ * This controller handles all calls concerning choosing algorithm , heuristic and additional options
+ */
 public class OptionButtonsController {
 
     @FXML

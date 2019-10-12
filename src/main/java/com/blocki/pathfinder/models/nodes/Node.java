@@ -5,6 +5,10 @@ import lombok.Setter;
 
 import java.util.Objects;
 
+/**
+ * This class is used by program mainly for viewing. It holds information useful during
+ * drawing and updating board
+ */
 @Getter
 @Setter
 public class Node {

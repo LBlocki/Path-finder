@@ -4,6 +4,10 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * This class holds information about various options chosen in the menu pane
+ * used in entire program so it is a singleton to ensure only one creation of an object of this class
+ */
 @Setter
 @Getter
 public class Menu {
@@ -28,6 +32,10 @@ public class Menu {
 
     private Integer sliderValue = 1;
 
+    /**
+     * This ensures its a singleton
+     * @return if its the first call, method will create new object, otherwise it will return existing one
+     */
     public static Menu getInstance() {
 
         if(instance == null) {

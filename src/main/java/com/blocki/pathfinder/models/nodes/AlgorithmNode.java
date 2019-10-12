@@ -1,12 +1,15 @@
 package com.blocki.pathfinder.models.nodes;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * This class is used as extended version on Node algorithm. It holds fields that are useful to the algorithm
+ * during path finding.
+ */
 @Getter
 @Setter
 public class AlgorithmNode extends Node {

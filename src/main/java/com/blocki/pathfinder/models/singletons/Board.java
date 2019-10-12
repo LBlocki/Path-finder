@@ -8,6 +8,10 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class holds information about board used in entire program
+ * so it is a singleton to ensure only one creation of an object of this class
+ */
 @Getter
 @Setter
 public class Board {
@@ -57,6 +61,10 @@ public class Board {
         }
     }
 
+    /**
+     * This ensures its a singleton
+     * @return if its the first call, method will create new object, otherwise it will return existing one
+     */
     public static Board getInstance() {
 
         if(instance == null) {
