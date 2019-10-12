@@ -65,13 +65,6 @@ public class MenuServiceImpl implements MenuService {
                     node.setDisable(false);
                 });
                 break;
-
-            case JPS:
-                heuristics.getToggles().forEach(toggle -> {
-                    Node node = (Node) toggle ;
-                    node.setDisable(false);
-                });
-                break;
         }
     }
 

@@ -43,8 +43,6 @@
                      toggleGroup="$algorithms" GridPane.columnIndex="1" GridPane.rowIndex="1" />
         <RadioButton mnemonicParsing="false" onMouseClicked="#algorithmButtonPressed" text="DFS" toggleGroup="$algorithms"
                      GridPane.rowIndex="2" />
-        <RadioButton mnemonicParsing="false" onMouseClicked="#algorithmButtonPressed" text="JPS" toggleGroup="$algorithms"
-                     GridPane.columnIndex="1" GridPane.rowIndex="2" />
     </GridPane>
     <Pane prefHeight="40.0" prefWidth="300.0">
         <Text layoutX="68.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose algorithm">

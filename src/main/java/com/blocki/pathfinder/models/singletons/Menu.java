@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 public class Menu {
 
-    public enum ALGORITHM_TYPE {A_star, Dijkstra, BFS, DFS, Greedy, JPS}
+    public enum ALGORITHM_TYPE {A_star, Dijkstra, BFS, DFS, Greedy}
 
     public enum HEURISTIC_TYPE {Manhattan, Euclidean, Chebyshev}
 

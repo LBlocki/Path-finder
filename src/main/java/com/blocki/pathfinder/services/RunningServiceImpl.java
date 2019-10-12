@@ -81,9 +81,6 @@ public class RunningServiceImpl implements RunningService {
                             case Greedy:
                                 greedy.run(gridPane, option, stopButton);
                                 break;
-
-                            case JPS:
-                                break;
                         }
 
 
