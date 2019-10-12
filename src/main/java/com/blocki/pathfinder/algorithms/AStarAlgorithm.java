@@ -89,14 +89,14 @@ public class AStarAlgorithm extends DistanceCalculatingAlgorithm {
 
             for (AlgorithmNode child : children) {
 
-                double tempDistance = super.calculateDistanceToStartNode(currentNode) +
+                double tempDistance = currentNode.getDistanceToStart() +
                         super.calculateDistanceBetween2neighbourNodes(currentNode, child) +
                         super.calculateDistanceToEndNode(child);
 
                 if (!queue.contains(child)) {
 
                     child.setParent(currentNode);
-                    child.setDistanceToStart( super.calculateDistanceToStartNode(currentNode) +
+                    child.setDistanceToStart(currentNode.getDistanceToStart() +
                             super.calculateDistanceBetween2neighbourNodes(currentNode, child));
                     child.setDistanceToEnd( super.calculateDistanceToEndNode(child));
                     queue.add(child);
@@ -107,7 +107,7 @@ public class AStarAlgorithm extends DistanceCalculatingAlgorithm {
 
                 else if (tempDistance < child.getTotalDistance()) {
 
-                    child.setDistanceToStart( super.calculateDistanceToStartNode(currentNode) +
+                    child.setDistanceToStart( currentNode.getDistanceToStart() +
                             super.calculateDistanceBetween2neighbourNodes(currentNode, child));
 
                     child.setDistanceToEnd(super.calculateDistanceToEndNode(child));
