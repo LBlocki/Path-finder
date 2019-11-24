@@ -1,7 +1,10 @@
 # PathFinder
 
-This is my simple app to present few of the most popular graph traversal algorithms. Tested on JDK 13. Uses maven as building tool.
-Window has a fixed size 1200x800 so it may be overflowing some screens ( 14 inch laptops for example ).
+This is my simple app to present few of the most popular graph traversal algorithms.
+Tools required for running the app:  
+    - JDK 13. Java is only backwards compatible so you may have problems using it with older versions.  
+    - Apache Maven 3.3.9. Not tested with other versions of maven.  
+Also note that my non-responsive design may cause some overflowing if your screen size is not big enough.
 
 ## Running application
   You can run the app using following command:
